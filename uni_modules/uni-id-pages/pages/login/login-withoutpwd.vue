@@ -21,7 +21,7 @@
 			<text class="tip">未注册的账号验证通过后将自动注册</text>
 			<view class="phone-box">
 				<view @click="chooseArea" class="area">+86</view>
-				<uni-easyinput :focus="focusPhone" @blur="focusPhone = false" class="input-box" type="number"
+				<uni-easyinput trim="both" :focus="focusPhone" @blur="focusPhone = false" class="input-box" type="number"
 					:inputBorder="false" v-model="phone" maxlength="11" placeholder="请输入手机号" />
 			</view>
 			<uni-id-pages-agreements scope="register" ref="agreements"></uni-id-pages-agreements>
