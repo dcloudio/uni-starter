@@ -66,47 +66,47 @@
 					{
 						"id": "apple",
 						"text": "苹果登录",
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/apple.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/apple.png",
 					},
 					{
 						"id": "univerify",
 						"text": "一键登录",
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/univerify.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/univerify.png",
 					},
 					{
 						"id": "taobao",
 						"text": "淘宝登录", //暂未提供该登录方式的接口示例
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/taobao.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/taobao.png",
 					},
 					{
 						"id": "facebook",
 						"text": "脸书登录", //暂未提供该登录方式的接口示例
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/facebook.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/facebook.png",
 					},
 					{
 						"id": "alipay",
 						"text": "支付宝登录", //暂未提供该登录方式的接口示例
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/alipay.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/alipay.png",
 					},
 					{
 						"id": "qq",
 						"text": "QQ登录", //暂未提供该登录方式的接口示例
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/qq.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/qq.png",
 					},
 					{
 						"id": "google",
 						"text": "谷歌登录", //暂未提供该登录方式的接口示例
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/google.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/google.png",
 					},
 					{
 						"id": "douyin",
 						"text": "抖音登录", //暂未提供该登录方式的接口示例
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/douyin.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/douyin.png",
 					},
 					{
 						"id": "sinaweibo",
 						"text": "新浪微博", //暂未提供该登录方式的接口示例
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/sinaweibo.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/sinaweibo.png",
 					}
 					// #endif
 				],

@@ -125,7 +125,7 @@
 						"to": '/pages/ucenter/settings/settings',
 						"icon": "gear"
 					}],
-					// #ifndef MP-WEIXIN
+					// #ifdef APP-PLUS
 					[{
 						"title": this.$t('mine.about'),
 						"to": '/pages/ucenter/about/about',
@@ -156,12 +156,13 @@
 			})
 			//#endif
 		},
-		onShow() {},
+		onShow() {
+		},
 		computed: {
 			userInfo() {
 				return store.userInfo
 			},
-			hasLogin() {
+			hasLogin(){
 				return store.hasLogin
 			},
 			// #ifdef APP-PLUS
@@ -174,10 +175,6 @@
 			}
 		},
 		methods: {
-      // 自动化测试专用
-      hasLoginTest(){
-      	return store.hasLogin
-      },
 			toSettings() {
 				uni.navigateTo({
 					url: "/pages/ucenter/settings/settings"
@@ -186,7 +183,7 @@
 			signIn() { //普通签到
 				this.$refs.signIn.open()
 			},
-			signInByAd() { //看激励视频广告签到
+			signInByAd(){ //看激励视频广告签到
 				this.$refs.signIn.showRewardedVideoAd()
 			},
 			/**
@@ -217,7 +214,7 @@
 			tapGrid(index) {
 				uni.showToast({
 					// title: '你点击了，第' + (index + 1) + '个',
-					title: this.$t('mine.clicked') + " " + (index + 1),
+					title: this.$t('mine.clicked') + " " + (index + 1) ,
 					icon: 'none'
 				});
 			},
@@ -229,11 +226,8 @@
 				if (uni.getSystemInfoSync().platform == "ios") {
 					// 这里填写appstore应用id
 					let appstoreid = this.appConfig.marketId.ios; // 'id1417078253';
-					console.log({
-						appstoreid
-					});
-					plus.runtime.openURL("itms-apps://" + 'itunes.apple.com/cn/app/wechat/' + appstoreid + '?mt=8',
-					err => {
+					console.log({appstoreid});
+					plus.runtime.openURL("itms-apps://" + 'itunes.apple.com/cn/app/wechat/' + appstoreid + '?mt=8',err=>{
 						console.log('plus.runtime.openURL err:' + JSON.stringify(err));
 					});
 				}
@@ -250,7 +244,7 @@
 			/**
 			 * 获取积分信息
 			 */
-			async getScore() {
+			getScore() {
 				if (!this.userInfo) return uni.showToast({
 					title: this.$t('mine.checkScore'),
 					icon: 'none'
@@ -258,7 +252,7 @@
 				uni.showLoading({
 					mask: true
 				})
-				return await db.collection("uni-id-scores")
+				db.collection("uni-id-scores")
 					.where('"user_id" == $env.uid')
 					.field('score,balance')
 					.orderBy("create_date", "desc")
@@ -268,23 +262,19 @@
 						console.log(res);
 						const data = res.result.data[0];
 						let msg = '';
-						msg = data ? (this.$t('mine.currentScore') + data.balance) : this.$t('mine.noScore');
+						msg = data ? (this.$t('mine.currentScore')+ data.balance) : this.$t('mine.noScore');
 						uni.showToast({
 							title: msg,
 							icon: 'none'
 						});
-						return res.result.data[0]
-					}).finally((err) => {
+					}).finally(()=>{
 						uni.hideLoading()
-						return err
 					})
 			},
 			async share() {
-				let {
-					result
-				} = await db.collection('uni-id-users').where("'_id' == $cloudEnv_uid").field('my_invite_code').get()
+				let {result} = await db.collection('uni-id-users').where("'_id' == $cloudEnv_uid").field('my_invite_code').get()
 				let myInviteCode = result.data[0].my_invite_code
-				if (!myInviteCode) {
+				if(!myInviteCode){
 					return uni.showToast({
 						title: '请检查uni-config-center中uni-id配置，是否已启用 autoSetInviteCode',
 						icon: 'none'
@@ -309,7 +299,7 @@
 							'?x-oss-process=image/resize,m_fill,h_100,w_100' //压缩图片解决，在ios端分享图过大导致的图片失效问题
 					},
 					menus: [{
-							"img": "/static/app-plus/sharemenu/wechatfriend.png",
+							"img": "/static/app/sharemenu/wechatfriend.png",
 							"text": this.$t('common.wechatFriends'),
 							"share": {
 								"provider": "weixin",
@@ -317,7 +307,7 @@
 							}
 						},
 						{
-							"img": "/static/app-plus/sharemenu/wechatmoments.png",
+							"img": "/static/app/sharemenu/wechatmoments.png",
 							"text": this.$t('common.wechatBbs'),
 							"share": {
 								"provider": "weixin",
@@ -325,26 +315,26 @@
 							}
 						},
 						{
-							"img": "/static/app-plus/sharemenu/weibo.png",
+							"img": "/static/app/sharemenu/weibo.png",
 							"text": this.$t('common.weibo'),
 							"share": {
 								"provider": "sinaweibo"
 							}
 						},
 						{
-							"img": "/static/app-plus/sharemenu/qq.png",
+							"img": "/static/app/sharemenu/qq.png",
 							"text": "QQ",
 							"share": {
 								"provider": "qq"
 							}
 						},
 						{
-							"img": "/static/app-plus/sharemenu/copyurl.png",
+							"img": "/static/app/sharemenu/copyurl.png",
 							"text": this.$t('common.copy'),
 							"share": "copyurl"
 						},
 						{
-							"img": "/static/app-plus/sharemenu/more.png",
+							"img": "/static/app/sharemenu/more.png",
 							"text": this.$t('common.more'),
 							"share": "shareSystem"
 						}

@@ -27,7 +27,7 @@
 						imageUrl: 'https://img-cdn-aliyun.dcloud.net.cn/stream/icon/__UNI__HelloUniApp.png'
 					},
 					menus: [{
-							"img": "/static/app-plus/sharemenu/wechatfriend.png",
+							"img": "/static/app/sharemenu/wechatfriend.png",
 							"text": "微信好友",
 							"share": { //当前项的分享参数配置。可覆盖公共的配置如下：分享到微信小程序，配置了type=5
 								"provider": "weixin",
@@ -35,7 +35,7 @@
 							}
 						},
 						{
-							"img": "/static/app-plus/sharemenu/wechatmoments.png",
+							"img": "/static/app/sharemenu/wechatmoments.png",
 							"text": "微信朋友圈",
 							"share": {
 								"provider": "weixin",
@@ -43,7 +43,7 @@
 							}
 						},
 						{
-							"img": "/static/app-plus/sharemenu/mp_weixin.png",
+							"img": "/static/app/sharemenu/mp_weixin.png",
 							"text": "微信小程序",
 							"share": {
 								provider: "weixin",
@@ -58,26 +58,26 @@
 							}
 						},
 						{
-							"img": "/static/app-plus/sharemenu/weibo.png",
+							"img": "/static/app/sharemenu/weibo.png",
 							"text": "微博",
 							"share": {
 								"provider": "sinaweibo"
 							}
 						},
 						{
-							"img": "/static/app-plus/sharemenu/qq.png",
+							"img": "/static/app/sharemenu/qq.png",
 							"text": "QQ",
 							"share": {
 								"provider": "qq"
 							}
 						},
 						{
-							"img": "/static/app-plus/sharemenu/copyurl.png",
+							"img": "/static/app/sharemenu/copyurl.png",
 							"text": "复制",
 							"share": "copyurl"
 						},
 						{
-							"img": "/static/app-plus/sharemenu/more.png",
+							"img": "/static/app/sharemenu/more.png",
 							"text": "更多",
 							"share": "shareSystem"
 						}
