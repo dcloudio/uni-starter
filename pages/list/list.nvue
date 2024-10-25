@@ -31,7 +31,7 @@
 					<!-- 通过body插槽定义布局 -->
 					<template v-slot:body>
 						<view class="main">
-							<text class="title">{{item.title}}</text>
+							<text class="title">{{item.title}}-111</text>
 							<view class="info">
 								<text class="author">{{item.user_id[0]?item.user_id[0].nickname:''}}</text>
 								<uni-dateformat class="last_modify_date" :date="item.last_modify_date"
@@ -41,14 +41,14 @@
 					</template>
 				</uni-list-item>
 				<!-- 加载状态：上拉加载更多，加载中，没有更多数据了，加载错误 -->
-				<!-- #ifdef APP-PLUS -->
+				<!-- #ifdef APP -->
 				<uni-list-item>
 					<template v-slot:body>
 				<!-- #endif -->
 						<uni-load-state @networkResume="refresh" :state="{data,pagination,hasMore, loading, error}"
 							@loadMore="loadMore">
 						</uni-load-state>
-				<!-- #ifdef APP-PLUS -->
+				<!-- #ifdef APP -->
 					</template>
 				</uni-list-item>
 				<!-- #endif -->

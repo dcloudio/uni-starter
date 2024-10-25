@@ -1,6 +1,6 @@
 import uniStarterConfig from '@/uni-starter.config.js';
 //应用初始化页
-// #ifdef APP-PLUS
+// #ifdef APP
 import checkUpdate from '@/uni_modules/uni-upgrade-center-app/utils/check-update';
 import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-check-version';
 
@@ -109,7 +109,7 @@ export default async function() {
 	})
 
 
-	// #ifdef APP-PLUS
+	// #ifdef APP
 	// 监听并提示设备网络状态变化
 	uni.onNetworkStatusChange(res => {
 		console.log(res.isConnected);
@@ -135,7 +135,7 @@ export default async function() {
  * // 初始化appVersion
  */
 function initAppVersion() {
-	// #ifdef APP-PLUS
+	// #ifdef APP
 	let appid = plus.runtime.appid;
 	plus.runtime.getProperty(appid, (wgtInfo) => {
 		let appVersion = plus.runtime;
