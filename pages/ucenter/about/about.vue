@@ -98,7 +98,7 @@
 					imageUrl: logo + '?x-oss-process=image/resize,m_fill,h_100,w_100' //压缩图片解决，在ios端分享图过大导致的图片失效问题
 				},
 				menus: [{
-						"img": "/static/app-plus/sharemenu/wechatfriend.png",
+						"img": "/static/app/sharemenu/wechatfriend.png",
 						"text": this.$t('common.wechatFriends'),
 						"share": {
 							"provider": "weixin",
@@ -106,7 +106,7 @@
 						}
 					},
 					{
-						"img": "/static/app-plus/sharemenu/wechatmoments.png",
+						"img": "/static/app/sharemenu/wechatmoments.png",
 						"text":  this.$t('common.wechatBbs'),
 						"share": {
 							"provider": "weixin",
@@ -114,26 +114,26 @@
 						}
 					},
 					{
-						"img": "/static/app-plus/sharemenu/weibo.png",
+						"img": "/static/app/sharemenu/weibo.png",
 						"text":  this.$t('common.weibo'),
 						"share": {
 							"provider": "sinaweibo"
 						}
 					},
 					{
-						"img": "/static/app-plus/sharemenu/qq.png",
+						"img": "/static/app/sharemenu/qq.png",
 						"text": "QQ",
 						"share": {
 							"provider": "qq"
 						}
 					},
 					{
-						"img": "/static/app-plus/sharemenu/copyurl.png",
+						"img": "/static/app/sharemenu/copyurl.png",
 						"text": this.$t('common.copy'),
 						"share": "copyurl"
 					},
 					{
-						"img": "/static/app-plus/sharemenu/more.png",
+						"img": "/static/app/sharemenu/more.png",
 						"text": this.$t('common.more'),
 						"share": "shareSystem"
 					}
