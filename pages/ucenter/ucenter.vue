@@ -78,7 +78,7 @@
 				],
 				ucenterList: [
 					[
-						// #ifdef APP-PLUS
+						// #ifdef APP
 						{
 							"title": this.$t('mine.signInByAd'),
 							"event": 'signInByAd',
@@ -108,7 +108,7 @@
 							"event": 'getScore',
 							"icon": "paperplane"
 						}
-						// #ifdef APP-PLUS
+						// #ifdef APP
 						, {
 							"title": this.$t('mine.invite'),
 							"event": 'share',
@@ -125,7 +125,7 @@
 						"to": '/pages/ucenter/settings/settings',
 						"icon": "gear"
 					}],
-					// #ifdef APP-PLUS
+					// #ifdef APP
 					[{
 						"title": this.$t('mine.about'),
 						"to": '/pages/ucenter/about/about',
@@ -287,7 +287,7 @@
 					company,
 					slogan
 				} = this.appConfig.about
-				// #ifdef APP-PLUS
+				// #ifdef APP
 				uniShare.show({
 					content: { //公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
 						type: 0,
