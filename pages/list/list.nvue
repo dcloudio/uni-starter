@@ -31,7 +31,7 @@
 					<!-- 通过body插槽定义布局 -->
 					<template v-slot:body>
 						<view class="main">
-							<text class="title">{{item.title}}-111</text>
+							<text class="title">{{item.title}}</text>
 							<view class="info">
 								<text class="author">{{item.user_id[0]?item.user_id[0].nickname:''}}</text>
 								<uni-dateformat class="last_modify_date" :date="item.last_modify_date"
@@ -45,7 +45,7 @@
 				<uni-list-item>
 					<template v-slot:body>
 				<!-- #endif -->
-						<uni-load-state @networkResume="refresh" :state="{data,pagination,hasMore, loading, error}"
+						<uni-load-state class="load-state" @networkResume="refresh" :state="{data,pagination,hasMore, loading, error}"
 							@loadMore="loadMore">
 						</uni-load-state>
 				<!-- #ifdef APP -->
@@ -121,11 +121,11 @@
 			// 	title:"获取定位中"
 			// });
 			//默认h5端不获取定位
-			// #ifndef H5
+			// #ifndef H5 || APP-HARMONY
 			let location = await gps.getLocation({
 				geocode: true
 			})
-			// console.log(location);
+			console.log(location);
 			// #endif
 			// if(location){
 			// 	uni.showToast({
@@ -243,4 +243,8 @@
 		z-index: 999;
 		/* #endif */
 	}
+  .load-state{
+    justify-content: center;
+    width: 750rpx;
+  }
 </style>

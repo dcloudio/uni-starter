@@ -1,4 +1,4 @@
-// #ifdef APP-PLUS
+// #ifdef APP
 import permision from "./wa-permission/permission.js"
 // #endif
 class Gps {
@@ -27,10 +27,10 @@ class Gps {
 						title: '定位获取失败',
 						icon: 'none'
 					});
-					console.error(err)
+					console.error(JSON.stringify(err))
 					callback(false)
 					
-					// #ifdef APP-PLUS
+					// #ifdef APP
 					await this.checkGpsIsOpen()
 					// #endif
 					
@@ -63,7 +63,7 @@ class Gps {
 			});
 		})
 	}
-	// #ifdef APP-PLUS
+	// #ifdef APP
 	async checkGpsIsOpen() {
 		this.lock = true //加锁防止重复的请求
 		// console.log('检查定位设置开启问题', permision.checkSystemEnableLocation());
