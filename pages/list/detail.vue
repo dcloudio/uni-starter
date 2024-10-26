@@ -11,8 +11,8 @@
 		<uni-nav-bar :statusBar="true" :border="false"></uni-nav-bar>
 		<!-- #endif -->
 		<view class="article-title">{{ title }}</view>
-		<unicloud-db v-slot:default="{data, loading, error, options}" :options="formData" collection="opendb-news-articles,uni-id-users"
-			:field="field" :getone="true" :where="where" :manual="true" ref="detail"
+		<unicloud-db v-slot:default="{data, loading, error, options}" :options="formData" :collection="colList"
+			:getone="true" :manual="true" ref="detail"
 			foreignKey="opendb-news-articles.user_id" @load="loadData">
 			<template v-if="!loading && data">
 				<uni-list :border="false">
@@ -81,7 +81,7 @@
 				title: 'title',
 				// 数据表名
 				// 查询字段，多个字段用 , 分割
-				field: 'user_id.nickname,user_id._id,avatar,excerpt,last_modify_date,comment_count,like_count,title,content',
+				// field: 'user_id.nickname,user_id._id,avatar,excerpt,last_modify_date,comment_count,like_count,title,content',
 				formData: {
 					noData: '<p style="text-align:center;color:#666">详情加载中...</p>'
 				}
@@ -94,7 +94,13 @@
 			where(){
 				//拼接where条件 查询条件 ,更多详见 ：https://uniapp.dcloud.net.cn/uniCloud/unicloud-db?id=jsquery
 				return `_id =="${this.id}"`
-			}
+			},
+      colList(){
+      	return [
+      		db.collection('opendb-news-articles').where(this.where).field('user_id,_id,avatar,excerpt,last_modify_date,comment_count,like_count,title,content').getTemp(),
+          db.collection('uni-id-users').field('_id,nickname').getTemp()
+      	]
+      }
 		},
 		onLoad(event) {
 			//获取真实新闻id，通常 id 来自上一个页面
