@@ -7,7 +7,7 @@
 	 DB Schema 规范：https://uniapp.dcloud.net.cn/uniCloud/schema
 	 -->
 	<view class="article">
-		<!-- #ifdef APP -->
+		<!-- #ifdef APP-PLUS -->
 		<uni-nav-bar :statusBar="true" :border="false"></uni-nav-bar>
 		<!-- #endif -->
 		<view class="article-title">{{ title }}</view>
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-	// #ifdef APP
+	// #ifdef APP-PLUS
 	import UniShare from '@/uni_modules/uni-share/js_sdk/uni-share.js';
 	import uniNavBar from '@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-nav-bar.vue';
 	const uniShare = new UniShare()
@@ -58,7 +58,7 @@
 	const db = uniCloud.database();
 	const readNewsLog = db.collection('read-news-log')
 	export default {
-		// #ifdef APP
+		// #ifdef APP-PLUS
 		components:{
 			"uni-nav-bar":uniNavBar
 		},
@@ -195,7 +195,7 @@
 			/**
 			 * 分享该文章
 			 */
-			// #ifdef APP
+			// #ifdef APP-PLUS
 			shareClick() {
 				let {
 					_id,
