@@ -1,6 +1,0 @@
-{
-	"scripts":{
-		"preupload": "node uni_modules_tools/main.js change",
-		"postupload": "node uni_modules_tools/main.js recovery"
-	}
-}
