@@ -1,20 +1,18 @@
 <template>
 	<view class="warp">
-		<!-- #ifdef APP-PLUS -->
+		<!-- #ifdef APP -->
 		<statusBar></statusBar>
 		<!-- #endif -->
 		
 		<!-- banner -->
 		<unicloud-db ref="bannerdb" v-slot:default="{data, loading, error, options}" collection="opendb-banner"
-			field="_id,bannerfile,open_url,title" @load="onqueryload">
+			field="_id,bannerfile,open_url,title" @load="onqueryload" >
 			<!-- 当无banner数据时显示占位图 -->
 			<image v-if="!(loading||data.length)" class="banner-image" src="/static/uni-center/headers.png" mode="aspectFill" :draggable="false" />
 			
-			<swiper v-else class="swiper-box" @change="changeSwiper" :current="current" indicator-dots>
+			<swiper v-else class="swiper-box"  @change="changeSwiper" :current="current" indicator-dots>
 				<swiper-item v-for="(item, index) in data" :key="item._id">
-					<view class="swiper-item" @click="clickBannerItem(item)">
-						<image class="banner-image" :src="item.bannerfile.url" mode="aspectFill" :draggable="false" />
-					</view>
+					<image class="banner-image" :src="item.bannerfile.url" mode="aspectFill" @click="clickBannerItem(item)" :draggable="false" />
 				</swiper-item>
 			</swiper>
 		</unicloud-db>
@@ -44,11 +42,11 @@
 </template>
 
 <script>
-	// #ifdef APP-PLUS
+	// #ifdef APP
 	import statusBar from "@/uni_modules/uni-nav-bar/components/uni-nav-bar/uni-status-bar";
 	// #endif
 	export default {
-		// #ifdef APP-PLUS
+		// #ifdef APP
 		components: {
 			statusBar
 		},
@@ -202,7 +200,7 @@
 	}
 
 	.banner-image {
-		width: 750rpx;
+		width: 100%;
 		height: 400rpx;
 	}
 

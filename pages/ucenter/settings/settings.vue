@@ -258,7 +258,7 @@
 	.content {
 		/* #ifndef APP-NVUE */
 		display: flex;
-		width: 750rpx;
+		width: 100%;
 		height: 100vh;
 		/* #endif */
 		flex-direction: column;
@@ -267,17 +267,16 @@
 	}
 
 	.bottom-back {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 		margin-top: 10px;
 		width: 750rpx;
 		height: 44px;
 		/* #ifndef APP-NVUE */
 		display: flex;
-		/* #endif */
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		/* #ifndef APP-NVUE */
-		border: none;
+    width: 100%;
+    border: none;
 		/* #endif */
 		border-width: 0;
 		border-radius: 0;
