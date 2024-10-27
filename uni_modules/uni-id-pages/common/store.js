@@ -118,9 +118,9 @@ export const mutations = {
 
 		if (delta) {
 			const page = pagesJson.pages[0]
-			return uni.reLaunch({
-				url: `/${page.path}`
-			})
+      return uni.switchTab({
+      	url: `/${page.path}`
+      })
 		}
 
 		uni.navigateBack({
