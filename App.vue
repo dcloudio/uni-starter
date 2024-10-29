@@ -29,7 +29,7 @@
 			// checkIsAgree(); // 默认不开启。目前全球，仅欧盟国家有网页端同意隐私权限的需要。如果需要可以自己去掉注视后生效
 			// #endif
 
-			// #ifdef APP
+			// #ifdef APP-PLUS
 			//idfa有需要的用户在应用首次启动时自己获取存储到storage中
 			/*var idfa = '';
 			var manager = plus.ios.invoke('ASIdentifierManager', 'sharedManager');

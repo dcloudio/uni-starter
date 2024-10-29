@@ -1,4 +1,4 @@
-// #ifdef APP
+// #ifdef APP-PLUS
 import permision from "./wa-permission/permission.js"
 // #endif
 class Gps {
@@ -30,7 +30,7 @@ class Gps {
 					console.error(JSON.stringify(err))
 					callback(false)
 					
-					// #ifdef APP
+					// #ifdef APP-PLUS
 					await this.checkGpsIsOpen()
 					// #endif
 					
@@ -63,7 +63,7 @@ class Gps {
 			});
 		})
 	}
-	// #ifdef APP
+	// #ifdef APP-PLUS
 	async checkGpsIsOpen() {
 		this.lock = true //加锁防止重复的请求
 		// console.log('检查定位设置开启问题', permision.checkSystemEnableLocation());
