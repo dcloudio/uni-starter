@@ -130,7 +130,7 @@
 			let location = await gps.getLocation({
 				geocode: true
 			})
-			console.log(location);
+			// console.log(location);
 			// #endif
 			// if(location){
 			// 	uni.showToast({

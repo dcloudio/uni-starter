@@ -3,7 +3,7 @@
 		<view class="search-container">
 			<!-- 搜索框 -->
 			<view class="search-container-bar">
-				<!-- #ifdef APP-PLUS -->
+				<!-- #ifdef APP -->
 				<uni-icons class="search-icons" :color="iconColor" size="22" type="mic-filled" @click="speech" />
 				<!-- #endif -->
 				<!-- :cancelText="keyBoardPopup ? '取消' : '搜索'" -->
@@ -163,7 +163,7 @@
 			}
 		},
 		onLoad() {
-			//#ifdef APP-PLUS
+			//#ifdef APP
 			this.statusBarHeight = `${uni.getSystemInfoSync().statusBarHeight}px`;
 			//#endif
 		},
@@ -376,7 +376,7 @@
 		flex-direction: row;
 	}
 
-	/* #ifdef APP-PLUS */
+	/* #ifdef APP */
 	/* #ifndef APP-NVUE  || VUE3*/
 	::v-deep
 	/* #endif */

@@ -137,7 +137,7 @@ export default async function() {
  * // 初始化appVersion
  */
 function initAppVersion() {
-	// #ifdef APP
+	// #ifdef APP-PLUS
 	let appid = plus.runtime.appid;
 	plus.runtime.getProperty(appid, (wgtInfo) => {
 		let appVersion = plus.runtime;

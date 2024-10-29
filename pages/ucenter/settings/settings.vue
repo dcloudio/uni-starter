@@ -57,7 +57,7 @@
 			uni.setNavigationBarTitle({
 				title: this.$t('settings.navigationBarTitle')
 			})
-			// #ifdef APP-PLUS || MP-WEIXIN
+			// #ifdef APP || MP-WEIXIN || (APP-HARMONY && uniVersion > 4.31)
 			uni.checkIsSupportSoterAuthentication({
 				success: (res) => {
 					this.supportMode = res.supportMode

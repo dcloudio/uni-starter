@@ -78,7 +78,7 @@
 				],
 				ucenterList: [
 					[
-						// #ifdef APP
+						// #ifdef APP-PLUS
 						{
 							"title": this.$t('mine.signInByAd'),
 							"event": 'signInByAd',
@@ -156,8 +156,7 @@
 			})
 			//#endif
 		},
-		onShow() {
-		},
+		onShow() {},
 		computed: {
 			userInfo() {
 				return store.userInfo
