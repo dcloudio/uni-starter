@@ -6,13 +6,12 @@ const db = uniCloud.database();
 const usersTable = db.collection('uni-id-users')
 
 let hostUserInfo = uni.getStorageSync('uni-id-pages-userInfo')||{}
-// console.log( hostUserInfo);
+
 const data = {
 	userInfo: hostUserInfo,
 	hasLogin: Object.keys(hostUserInfo).length != 0
 }
 
-// console.log('data', data);
 // 定义 mutations, 修改属性
 export const mutations = {
 	// data不为空，表示传递要更新的值(注意不是覆盖是合并),什么也不传时，直接查库获取更新
@@ -37,6 +36,10 @@ export const mutations = {
 			})
 
 		} else {
+      // 不等待联网查询，立即更新用户_id确保store.userInfo中的_id是最新的
+      const _id = uniCloud.getCurrentUserInfo().uid
+      this.setUserInfo({_id},{cover:true})
+      // 查库获取用户信息，更新store.userInfo
 			const uniIdCo = uniCloud.importObject("uni-id-co", {
 				customUI: true
 			})
@@ -58,7 +61,7 @@ export const mutations = {
 			}
 		}
 	},
-	async setUserInfo(data, {cover}={cover:false}) {
+	setUserInfo(data, {cover}={cover:false}) {
 		// console.log('set-userInfo', data);
 		let userInfo = cover?data:Object.assign(store.userInfo,data)
 		store.userInfo = Object.assign({},userInfo)
@@ -78,13 +81,12 @@ export const mutations = {
 		}
 		uni.removeStorageSync('uni_id_token');
 		uni.setStorageSync('uni_id_token_expired', 0)
+    this.setUserInfo({},{cover:true})
+    uni.$emit('uni-id-pages-logout')
 		uni.redirectTo({
 			url: `/${pagesJson.uniIdRouter && pagesJson.uniIdRouter.loginPage ? pagesJson.uniIdRouter.loginPage: 'uni_modules/uni-id-pages/pages/login/login-withoutpwd'}`,
 		});
-		uni.$emit('uni-id-pages-logout')
-		this.setUserInfo({},{cover:true})
 	},
-
 	loginBack (e = {}) {
 		const {uniIdRedirectUrl = ''} = e
 		let delta = 0; //判断需要返回几层
@@ -118,9 +120,9 @@ export const mutations = {
 
 		if (delta) {
 			const page = pagesJson.pages[0]
-      return uni.switchTab({
-      	url: `/${page.path}`
-      })
+			return uni.reLaunch({
+				url: `/${page.path}`
+			})
 		}
 
 		uni.navigateBack({
@@ -139,6 +141,7 @@ export const mutations = {
 				duration: 3000
 			});
 		}
+    // 异步调用（更新用户信息）防止获取头像等操作阻塞页面返回
 		this.updateUserInfo()
 
 		uni.$emit('uni-id-pages-login-success')
