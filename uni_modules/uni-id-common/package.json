@@ -10,16 +10,15 @@
         "权限"
     ],
 	"repository": "https://gitcode.net/dcloud/uni-id-common",
-	"engines": {
-		"HBuilderX": "^3.1.0"
+    "engines": {
 	},
     "dcloudext": {
         "sale": {
 			"regular": {
-				"price": "0.00"
+				"price": 0
 			},
 			"sourcecode": {
-				"price": "0.00"
+				"price": 0
 			}
 		},
 		"contact": {
