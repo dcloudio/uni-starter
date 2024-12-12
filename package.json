@@ -1,7 +1,7 @@
 {
 	"id": "uni-starter",
 	"displayName": "uni-starter",
-	"version": "2.2.2",
+	"version": "2.2.3",
 	"description": "云端一体应用快速开发基本项目模版",
 	"keywords": [
         "login",
@@ -47,9 +47,11 @@
 			},
 			"client": {
 				"App": {
-					"app-vue": "y",
-					"app-nvue": "u"
-				},
+                    "app-vue": "y",
+                    "app-nvue": "u",
+                    "app-harmony": "u",
+                    "app-uvue": "u"
+                },
 				"H5-mobile": {
 					"Safari": "u",
 					"Android Browser": "u",
