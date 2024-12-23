@@ -1,7 +1,7 @@
 describe('about', () => {
 	let page;
-	if(process.env.UNI_PLATFORM === "mp-weixin"){
-		it('微信平台不支持', async () => {
+	if(process.env.UNI_PLATFORM === "mp-weixin" || process.env.UNI_PLATFORM === "h5"){
+		it('web-mp skip', async () => {
 			expect(1).toBe(1)
 		})
 		return

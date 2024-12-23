@@ -174,6 +174,10 @@
 			}
 		},
 		methods: {
+      // 自动化测试专用
+      hasLoginTest(){
+        return store.hasLogin
+      },
 			toSettings() {
 				uni.navigateTo({
 					url: "/pages/ucenter/settings/settings"
@@ -243,7 +247,7 @@
 			/**
 			 * 获取积分信息
 			 */
-			getScore() {
+			async getScore() {
 				if (!this.userInfo) return uni.showToast({
 					title: this.$t('mine.checkScore'),
 					icon: 'none'
@@ -251,7 +255,7 @@
 				uni.showLoading({
 					mask: true
 				})
-				db.collection("uni-id-scores")
+				return await db.collection("uni-id-scores")
 					.where('"user_id" == $env.uid')
 					.field('score,balance')
 					.orderBy("create_date", "desc")
@@ -266,8 +270,10 @@
 							title: msg,
 							icon: 'none'
 						});
-					}).finally(()=>{
+            return res.result.data[0]
+					}).finally((err)=>{
 						uni.hideLoading()
+            return err
 					})
 			},
 			async share() {

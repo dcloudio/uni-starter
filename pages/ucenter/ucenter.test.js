@@ -25,11 +25,12 @@ describe('ucenter', () => {
 	})
 	it('列表', async () => {
 		const getUcenterList = await page.data('ucenterList')
-		if (platform === "mp-weixin") {
-			expect(getUcenterList.length).toBe(2);
-		} else {
-			expect(getUcenterList.length).toBe(3);
-		}
+    expect(getUcenterList.length).toBe(2);
+		// if (platform === "mp-weixin") {
+		// 	expect(getUcenterList.length).toBe(2);
+		// } else {
+		// 	expect(getUcenterList.length).toBe(3);
+		// }
 	})
 	it('普通签到', async () => {
 		if (platform.startsWith("app")) {

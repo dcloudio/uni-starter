@@ -4,7 +4,6 @@ describe('grid', () => {
 	beforeAll(async () => {
 		page = await program.switchTab('/pages/grid/grid')
 		await page.waitFor('view')
-    console.log("page", page)
     if(process.env.UNI_PLATFORM === "mp-weixin"){
       await page.waitFor(5000)
     }else{
@@ -19,7 +18,6 @@ describe('grid', () => {
 	})
 	it('点击宫格', async () => {
 		const perPage = await page.$$('.grid-item-box')
-		console.log("perPage", perPage.length)
 		for (var i = 0; i < perPage.length; i++) {
 			await perPage[i].tap()
 			await page.waitFor(300)
