@@ -13,7 +13,7 @@ describe('userinfo', () => {
 		page = await program.navigateTo(PAGE_PATH)
 		await page.waitFor("view")
 		userInfo = await page.callMethod('userInfoTest')
-		console.log("userInfo---1", userInfo)
+		console.log("userInfo:", userInfo)
 		if (!userInfo._id) {
 			console.log("未登录测试失败")
 			return
@@ -21,12 +21,11 @@ describe('userinfo', () => {
 	});
 	it("昵称", async () => {
 		const nickname = "数字天堂DCloud" + Math.round(Math.random() * 10);
-		console.log('nickname',nickname)
 		await page.waitFor(300)
 		await page.callMethod("setNickname", nickname)
 		await page.waitFor(5000)
 		userInfo = await page.callMethod('userInfoTest')
-		console.log("update--nickname---2", userInfo.nickname)
+		console.log("update--nickname:", userInfo.nickname)
 		expect(userInfo.nickname).toBe(nickname)
 	})
 	// it("头像", async () => {
