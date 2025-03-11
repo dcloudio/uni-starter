@@ -263,7 +263,7 @@
 		}]
 	},
 	"uniIdRouter": {
-		"loginPage": "uni_modules/uni-id-pages/pages/login/login-withoutpwd",
+		"loginPage": "uni_modules/uni-id-pages/pages/login/login-withpwd",
 		"needLogin": [
 			"/uni_modules/uni-id-pages/pages/userinfo/userinfo"
 		],
