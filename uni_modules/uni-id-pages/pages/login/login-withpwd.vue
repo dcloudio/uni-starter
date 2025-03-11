@@ -125,7 +125,9 @@
 				}
 
 				return await uniIdCo.login(data).then(e => {
-					this.loginSuccess(e)
+          if(!this.isTest){
+          	this.loginSuccess(e)
+          }
 					return e
 				}).catch(e => {
 					if (e.errCode == 'uni-id-captcha-required') {

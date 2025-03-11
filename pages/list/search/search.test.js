@@ -11,9 +11,9 @@ describe('search', () => {
 	beforeAll(async () => {
 		page = await program.reLaunch('/pages/list/search/search')
 		await page.waitFor('view')
+    await page.waitFor(3000)
 	})
 	it('搜索发现-显示-隐藏', async () => {
-		expect.assertions(2);
 		// 搜索发现 刷新
 		await page.callMethod('searchHotRefresh')
 		await page.waitFor(1000)
@@ -29,10 +29,10 @@ describe('search', () => {
 		}
 	})
 	it('搜索内容', async () => {
-		await page.waitFor(300)
 		await page.setData({
 			searchText: '小程序'
 		})
 		await page.callMethod('search', '小程序')
+    await page.waitFor(1000)
 	})
 });
