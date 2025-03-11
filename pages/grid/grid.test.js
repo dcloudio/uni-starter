@@ -1,6 +1,6 @@
 jest.setTimeout(20000)
 describe('grid', () => {
-	let page, hasLogin;
+	let page;
 	beforeAll(async () => {
 		page = await program.switchTab('/pages/grid/grid')
 		await page.waitFor('view')
@@ -19,11 +19,12 @@ describe('grid', () => {
     expect(src).toBe('https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg')
   })
   it('检测宫格', async () => {
-    hasLogin = await page.data('hasLogin')
+    const hasLogin = await page.data('hasLogin')
     const grids = await page.$$('.text')
+    console.log('hasLogin: ',hasLogin,grids.length);
     if(hasLogin){
       expect(grids.length).toBe(6)
-      expect(await grids[3].text()).toBe('登录可见')
+      expect(await grids[3].text()).toBe('游客不可见')
     }else{
       expect(grids.length).toBe(3)
     }
