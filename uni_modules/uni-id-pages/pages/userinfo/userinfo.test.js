@@ -13,7 +13,6 @@ describe('userinfo', () => {
 		page = await program.navigateTo(PAGE_PATH)
 		await page.waitFor("view")
 		userInfo = await page.callMethod('userInfoTest')
-		console.log("userInfo:", userInfo)
 		if (!userInfo._id) {
 			console.log("未登录测试失败")
 			return
@@ -25,7 +24,6 @@ describe('userinfo', () => {
 		await page.callMethod("setNickname", nickname)
 		await page.waitFor(5000)
 		userInfo = await page.callMethod('userInfoTest')
-		console.log("update--nickname:", userInfo.nickname)
 		expect(userInfo.nickname).toBe(nickname)
 	})
 	// it("头像", async () => {

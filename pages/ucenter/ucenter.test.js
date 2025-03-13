@@ -12,9 +12,8 @@ describe('ucenter', () => {
 		page = await program.switchTab('/pages/ucenter/ucenter')
 		await page.waitFor('view')
 		hasLogin = await page.callMethod('hasLoginTest')
-		console.log("登录状态", hasLogin, platform)
 		if (!hasLogin) {
-			console.log('hasLogin--err')
+			console.log('未登录测试失败')
 			return
 		}
 	})
@@ -42,7 +41,6 @@ describe('ucenter', () => {
 	})
 	it('我的积分', async () => {
 		const getScoreRes = await page.callMethod('getScore')
-		console.log('getScoreRes: ', getScoreRes);
 		await page.waitFor(1000)
 		if (getScoreRes.score) {
 			expect.assertions(2);

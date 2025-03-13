@@ -21,7 +21,6 @@ describe('grid', () => {
   it('检测宫格', async () => {
     const hasLogin = await page.data('hasLogin')
     const grids = await page.$$('.text')
-    console.log('hasLogin: ',hasLogin,grids.length);
     if(hasLogin){
       expect(grids.length).toBe(6)
       expect(await grids[3].text()).toBe('游客不可见')

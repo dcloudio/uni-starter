@@ -11,7 +11,6 @@ describe('settings', () => {
 		page = await program.navigateTo('/pages/ucenter/settings/settings')
 		await page.waitFor('view')
 		hasLogin = await page.callMethod('hasLoginTest')
-		console.log("登录状态", hasLogin)
 		if (!hasLogin) {
 			console.log("未登录测试失败")
 			return
@@ -31,11 +30,7 @@ describe('settings', () => {
 			expect((await el.$$('.mt10')).length).toBe(2)
 		}
 	})
-  // it('screenshot', async () => {
-  //   const image = await program.screenshot();
-  //   expect(image).toSaveImageSnapshot();
-  //   await page.waitFor(500);
-  // })
+ 
 	it('退出登录', async () => {
 		const bottomEl = await page.$('.bottom-back-text')
 		expect(await bottomEl.text()).toBe('退出登录')

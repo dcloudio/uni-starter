@@ -17,22 +17,9 @@ describe('list', () => {
   })
   it('检测标题', async () => {
     expect.assertions(1);
-    if(process.env.UNI_PLATFORM === "mp-weixin"){
-      await page.waitFor(8000)
-    }else{
-      await page.waitFor(3000)
-    }
+    const waitTime = process.env.UNI_PLATFORM === "mp-weixin"? 8000 : 3000;
+    await page.waitFor(waitTime);
     const getTitle = await page.data('dataList')
-    console.log('getTitle: ', getTitle);
     expect(getTitle.title).toBe('阿里小程序IDE官方内嵌uni-app，为开发者提供多端开发服务')
   })
-  // it('点击搜索跳转详情页', async () => {
-  //   const items = await page.$('.uni-list-item')
-  //   await items.tap()
-  //   await page.waitFor(3000)
-  //   await page.waitFor('view')
-  //   currentPage = await program.currentPage()
-  //   console.log('currentPage: ', currentPage);
-  //   expect(currentPage.path).toBe('pages/list/detail')
-  // })
 })
