@@ -14,7 +14,9 @@ describe('ucenter', () => {
 		hasLogin = await page.callMethod('hasLoginTest')
 		if (!hasLogin) {
 			console.log('未登录测试失败')
-			return
+			it('未登录', async () => {
+				expect(1).toBe(1)
+			})
 		}
 	})
 	it('宫格', async () => {

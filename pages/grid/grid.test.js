@@ -4,11 +4,8 @@ describe('grid', () => {
 	beforeAll(async () => {
 		page = await program.switchTab('/pages/grid/grid')
 		await page.waitFor('view')
-    if(process.env.UNI_PLATFORM === "mp-weixin"){
-      await page.waitFor(5000)
-    }else{
-      await page.waitFor(2000)
-    }
+		const waitTime = process.env.UNI_PLATFORM === "mp-weixin"?5000:2000
+		await page.waitFor(waitTime)
 	})
   it('检测banner', async () => {
     // 等待图片显示完成

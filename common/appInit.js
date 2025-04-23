@@ -53,8 +53,9 @@ export default async function() {
 			// 	params // 参数列表
 			// });
 			if(objectName == "uni-id-co" && (methodName.includes('loginBy') ||  ['login','registerUser'].includes(methodName) )){
-				console.log('执行登录相关云对象',uni.getSystemInfoSync().platform);
-        if (uni.getSystemInfoSync().platform != "ios") {
+				const platform = uni.getSystemInfoSync().platform
+				// 自动化测试时，ios和harmony会有弹框，暂时不获取剪切板
+        if (platform !== "ios" && platform !== "harmonyos") {
           params[0].inviteCode = await new Promise((callBack) => {
             uni.getClipboardData({
               success: function(res) {

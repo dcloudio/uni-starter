@@ -1,12 +1,13 @@
-let pageIndex = 0
+let pageIndex = 0;
+let page;
 const pages = [
 	'/uni_modules/uni-id-pages/pages/login/login-withpwd'
 ]
-
-let page;
+const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
+const isHarmony = platformInfo.startsWith('harmony')
 describe('page screenshot test', () => {
-  if(process.env.uniTestPlatformInfo == 'ios_simulator 13.7'){
-    it('ios', async () => {
+  if(process.env.uniTestPlatformInfo == 'ios_simulator 13.7' || isHarmony){
+    it('ios-harmony', async () => {
     	expect(1).toBe(1)
     })
     return

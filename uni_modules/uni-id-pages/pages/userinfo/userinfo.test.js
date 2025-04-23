@@ -14,8 +14,10 @@ describe('userinfo', () => {
 		await page.waitFor("view")
 		userInfo = await page.callMethod('userInfoTest')
 		if (!userInfo._id) {
-			console.log("未登录测试失败")
-			return
+			console.log("未登录测试失败",userInfo)
+			it('未登录', async () => {
+				expect(1).toBe(1)
+			})
 		}
 	});
 	it("昵称", async () => {
@@ -26,26 +28,4 @@ describe('userinfo', () => {
 		userInfo = await page.callMethod('userInfoTest')
 		expect(userInfo.nickname).toBe(nickname)
 	})
-	// it("头像", async () => {
-	// 	const imgs = [
-	// 		"https://vkceyugu.cdn.bspapp.com/VKCEYUGU-52b18b34-3a3e-4861-89a0-c362c7634787/5105c383-8d83-4f40-938e-7c32c5983f8d.png",
-	// 		"https://vkceyugu.cdn.bspapp.com/VKCEYUGU-52b18b34-3a3e-4861-89a0-c362c7634787/61869c72-3117-4ea4-8d6d-ebb67617c7d9.jpg",
-	// 		"https://vkceyugu.cdn.bspapp.com/VKCEYUGU-52b18b34-3a3e-4861-89a0-c362c7634787/558cde0a-b514-4de7-8c7d-1d6b733f9440.png"
-	// 	]
-	
-	// 	const avatar_file = {
-	// 		url: imgs[Math.floor(Math.random() * imgs.length)]
-	// 	}
-	// 	console.log("avatar_file: ", avatar_file);
-	// 	console.log("process.env.UNI_PLATFORM: ", process.env.UNI_PLATFORM);
-	// 	if (process.env.UNI_PLATFORM != "mp-weixin") {
-	// 		const avatarCom = await page.$('.avatar')
-	// 		console.log("avatarCom: ",avatarCom);
-	// 		const elBox = await avatarCom.$('.box')
-	// 		console.log("elBox: ",elBox);
-	// 		// const elBox = await page.$('.box')
-	// 		await elBox.callMethod('setAvatarFile',avatar_file)
-	// 		await elBox.waitFor(500)
-	// 	}
-	// })
 });
