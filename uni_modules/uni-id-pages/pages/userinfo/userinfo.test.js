@@ -13,11 +13,10 @@ describe('userinfo', () => {
 		page = await program.navigateTo(PAGE_PATH)
 		await page.waitFor("view")
 		userInfo = await page.callMethod('userInfoTest')
+		console.log("userInfo",userInfo)
 		if (!userInfo._id) {
-			console.log("未登录测试失败",userInfo)
-			it('未登录', async () => {
-				expect(1).toBe(1)
-			})
+			console.log("未登录测试失败")
+			return
 		}
 	});
 	it("昵称", async () => {
