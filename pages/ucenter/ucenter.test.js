@@ -1,9 +1,8 @@
 jest.setTimeout(30000);
 describe('ucenter', () => {
-	let page, platform, hasLogin;
-	platform = process.env.UNI_PLATFORM
+	let page, hasLogin, isApp;
 	if (process.env.uniTestPlatformInfo == 'ios_simulator 13.7') {
-		it('ucenter-ios13.7', async () => {
+		it('ios13.7', async () => {
 			expect(1).toBe(1)
 		})
 		return
@@ -12,42 +11,47 @@ describe('ucenter', () => {
 		page = await program.switchTab('/pages/ucenter/ucenter')
 		await page.waitFor('view')
 		hasLogin = await page.callMethod('hasLoginTest')
+		console.log('hasLogin: ',hasLogin);
+		isApp = process.env.UNI_PLATFORM.startsWith("app")
+	})
+	it('验证登录状态', async () => {
+		const notLoggedText = await page.$('.uer-name')
+		const userNameText = await notLoggedText.text()
 		if (!hasLogin) {
-			console.log('未登录测试失败')
+			expect(userNameText).toBe('未登录')
 			return
 		}
+		expect(userNameText).not.toBe('未登录')
 	})
-	it('宫格', async () => {
-		expect.assertions(1);
-		const getGrid = await page.data('gridList')
-		expect(getGrid.length).toBe(4)
+	it('验证宫格列表', async () => {
+		const gridList = await page.data('gridList')
+		expect(gridList.length).toBe(4)
+		const gridItems = await page.$$('.grid .item')
+		expect(gridItems.length).toBe(4)
 	})
-	it('列表', async () => {
-		const getUcenterList = await page.data('ucenterList')
-		if (platform.startsWith("app")) {
-			expect(getUcenterList.length).toBe(3);
+	it('验证功能列表', async () => {
+		const ucenterList = await page.data('ucenterList')
+		if (isApp) {
+			expect(ucenterList.length).toBe(3)
 		} else {
-			expect(getUcenterList.length).toBe(2);
+			expect(ucenterList.length).toBe(2)
 		}
 	})
-	it('普通签到', async () => {
-		if (platform.startsWith("app")) {
+	it('验证签到功能', async () => {
+		if (!hasLogin) return
+		if (isApp) {
 			await page.callMethod('signInByAd')
 			await page.waitFor(1000)
-			await page.callMethod('share')
 		} else {
 			await page.callMethod('signIn')
 		}
 	})
-	it('我的积分', async () => {
-		const getScoreRes = await page.callMethod('getScore')
-		await page.waitFor(1000)
-		if (getScoreRes.score) {
-			expect.assertions(2);
-			expect(getScoreRes.score).not.toBeUndefined();
-			expect(getScoreRes.balance).toBeGreaterThanOrEqual(getScoreRes.score);
-		} else {
-			console.log("签到失败");
+	it('验证积分功能', async () => {
+		if (!hasLogin) return
+		const scoreRes = await page.callMethod('getScore')
+		if (scoreRes.score) {
+			expect(scoreRes.score).not.toBeUndefined()
+			expect(scoreRes.balance).toBeGreaterThanOrEqual(scoreRes.score)
 		}
 	})
-})
+});

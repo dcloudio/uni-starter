@@ -12,7 +12,7 @@
 		</view>
 
 		<unicloud-db ref='udb' v-slot:default="{data,pagination,hasMore, loading, error, options}" @error="onqueryerror"
-			:collection="colList" :page-size="10" @load="loadData">
+			:collection="colList" :page-size="10" @load="loadDataTest">
 			<!-- 基于 uni-list 的页面布局 field="user_id.nickname"-->
 			<uni-list class="uni-list" :border="false" :style="{height:listHight}">
 
@@ -92,8 +92,8 @@
 				keyword: "",
 				showRefresh: false,
 				listHight: 0,
-				dataList:{},
-				isTest:true
+				// 自动化测试
+				dataListTest:{},
 			}
 		},
 		watch: {
@@ -142,10 +142,8 @@
 		},
 		methods: {
       // 自动化测试
-			loadData(e) {
-				console.log("e: ----", e);
-				this.dataList = e[0]
-				console.log("this.dataList: ", this.dataList);
+			loadDataTest(e) {
+				this.dataListTest = e[0]
 			},
 			searchClick(e) { //点击搜索框
 				uni.hideKeyboard();

@@ -22,7 +22,7 @@ describe('login-withpwd', () => {
 			})
 		}
 		const resLogin = await page.callMethod('pwdLogin')
-		console.log("resLogin: ", resLogin);
+		console.log("resLogin: ", resLogin.errCode);
 		expect.assertions(1);
 		switch (resLogin.errCode){
 			case 0:

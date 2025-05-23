@@ -87,9 +87,10 @@ const uniIdCo = uniCloud.importObject("uni-id-co")
 			this.hasPwd = res.isPasswordSet
 		},
 		methods: {
-			// 自动化测试专用
-			userInfoTest() {
-			  return store.userInfo
+			// 自动化测试辅助方法
+			async updateUserInfoForTest() {
+				await mutations.updateUserInfo()
+				return store.userInfo
 			},
 			login() {
 				uni.navigateTo({

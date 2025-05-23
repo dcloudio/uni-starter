@@ -19,7 +19,7 @@ describe('register', () => {
 			isTest: true
 		})
 		const resLogin = await page.callMethod('submit')
-		console.log("resLogin: ", resLogin);
+		console.log("resLogin: ", resLogin.errCode);
 		// expect.assertions(1);
 		switch (resLogin.errCode) {
 			case 0:
