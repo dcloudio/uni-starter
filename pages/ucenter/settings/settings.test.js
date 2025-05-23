@@ -37,7 +37,8 @@ describe('settings', () => {
 		expect(listItems.length).toBeGreaterThan(0)
 		const texts = []
 		for (let i = 0; i < listItems.length; i++) {
-			texts.push(await listItems[i].text())
+		  // 去除首尾空格和换行符
+		  texts.push((await listItems[i].text()).trim()) 
 		}
 		expect(texts).toContain('账号资料')
 		expect(texts).toContain('清理缓存')
