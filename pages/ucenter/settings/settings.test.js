@@ -1,6 +1,7 @@
 jest.setTimeout(30000);
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isHarmony = platformInfo.startsWith('harmony')
+const ios = platformInfo.startsWith('ios')
 describe('settings', () => {
 	let page, hasLogin,listItems;
 	if (process.env.uniTestPlatformInfo == 'ios_simulator 13.7') {
@@ -40,10 +41,15 @@ describe('settings', () => {
 		  // 去除首尾空格和换行符
 		  texts.push((await listItems[i].text()).trim()) 
 		}
+		console.log('texts: ',texts);
 		expect(texts).toContain('账号资料')
 		expect(texts).toContain('清理缓存')
 		expect(texts).toContain('推送功能')
-		expect(texts).toContain('指纹解锁')
+		if(ios){
+			expect(texts).toContain('人脸解锁');
+		}else{
+			expect(texts).toContain('指纹解锁');
+		}
 		await page.callMethod('clearTmp')
 		const pushRes = await page.data('pushIsOn')
 		if (pushRes == "wait" && !isHarmony) {
