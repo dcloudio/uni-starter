@@ -42,14 +42,13 @@ describe('settings', () => {
 		  texts.push((await listItems[i].text()).trim()) 
 		}
 		console.log('texts: ',texts);
-		expect(texts).toContain('账号资料')
-		expect(texts).toContain('清理缓存')
-		expect(texts).toContain('推送功能')
-		if(ios){
-			expect(texts).toContain('人脸解锁');
-		}else{
-			expect(texts).toContain('指纹解锁');
+		expect(texts).toContain('账号资料');
+		if (!isHarmony) {
+			expect(texts).toContain('清理缓存');
+			expect(texts).toContain('推送功能');
 		}
+		unlockText = ios ? '人脸解锁' : '指纹解锁'
+		expect(texts).toContain(unlockText);
 		await page.callMethod('clearTmp')
 		const pushRes = await page.data('pushIsOn')
 		if (pushRes == "wait" && !isHarmony) {
