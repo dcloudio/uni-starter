@@ -46,9 +46,9 @@ describe('settings', () => {
 		if (!isHarmony) {
 			expect(texts).toContain('清理缓存');
 			expect(texts).toContain('推送功能');
-			unlockText = ios ? '人脸解锁' : '指纹解锁'
+			const unlockText = ios ? '人脸解锁' : '指纹解锁'
+			expect(texts).toContain(unlockText);
 		}
-		expect(texts).toContain(unlockText);
 		await page.callMethod('clearTmp')
 		const pushRes = await page.data('pushIsOn')
 		if (pushRes == "wait" && !isHarmony) {
