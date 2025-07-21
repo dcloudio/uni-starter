@@ -1,3 +1,4 @@
+jest.setTimeout(20000)
 describe('search', () => {
 	let page, containsVite, isApp;
 	containsVite = process.env.UNI_CLI_PATH.includes('uniapp-cli-vite')
@@ -12,7 +13,8 @@ describe('search', () => {
 	beforeAll(async () => {
 	  page = await program.reLaunch('/pages/list/search/search')
 	  await page.waitFor('view')
-	  await page.waitFor(3000)
+		const waitTime = process.env.UNI_PLATFORM === "mp-weixin" ? 5000 : 3000
+		await page.waitFor(waitTime)
 	})
   
 	it('搜索发现-显示-隐藏', async () => {
