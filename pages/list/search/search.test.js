@@ -13,7 +13,7 @@ describe('search', () => {
 	beforeAll(async () => {
 	  page = await program.reLaunch('/pages/list/search/search')
 	  await page.waitFor('view')
-		const waitTime = process.env.UNI_PLATFORM === "mp-weixin" ? 5000 : 3000
+		const waitTime = process.env.UNI_PLATFORM === "mp-weixin" ? 10000 : 3000
 		await page.waitFor(waitTime)
 	})
   
