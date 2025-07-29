@@ -1,6 +1,8 @@
-jest.setTimeout(20000)
+jest.setTimeout(30000)
 describe('search', () => {
 	let page, containsVite, isApp;
+	const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
+	const isMP = platformInfo.startsWith('mp')
 	containsVite = process.env.UNI_CLI_PATH.includes('uniapp-cli-vite')
 	isApp = process.env.UNI_PLATFORM.includes('app')
 	if ((containsVite && isApp) || process.env.uniTestPlatformInfo == 'ios_simulator 13.7') {
@@ -11,6 +13,11 @@ describe('search', () => {
 	}
   
 	beforeAll(async () => {
+		if(isMP){
+			// 解决mp端超时问题
+			// 如果超时，等待页面加载完成，避免测试时页面未准备好
+			await new Promise(resolve => setTimeout(resolve, 10000));
+		}
 	  page = await program.reLaunch('/pages/list/search/search')
 	  await page.waitFor('view')
 		const waitTime = process.env.UNI_PLATFORM === "mp-weixin" ? 10000 : 3000
@@ -47,12 +54,15 @@ describe('search', () => {
 	  expect(afterSet).toBe(searchKeyword)
 	  // 执行搜索
 	  await page.callMethod('search', searchKeyword)
-	  await page.waitFor(3000)
+	  await page.waitFor(2000)
 	  // 重新获取页面实例（现在是list页面）
 	  page = await program.currentPage()
 	  await page.waitFor('view')
+		console.log('page',page)
+		expect(page.path).toBe("pages/list/list")
 	  // 验证搜索结果
 	  const pageData = await page.data()
+		console.log('pageData',pageData)
 	  expect(pageData.keyword).toBe(searchKeyword)
 	  expect(pageData.where).toContain(searchKeyword)
 	  expect(pageData.dataListTest).toBeDefined()

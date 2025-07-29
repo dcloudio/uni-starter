@@ -17,6 +17,7 @@ describe('settings', () => {
 	})
 	it('根据登录状态动态测试', async () => {
 		const bottomBtn = await page.$('.bottom-back-text')
+		await page.waitFor(1000)
 		if (!hasLogin) {
 			// 未登录时验证按钮文本为"登录"
 			expect(await bottomBtn.text()).toBe('登录')
