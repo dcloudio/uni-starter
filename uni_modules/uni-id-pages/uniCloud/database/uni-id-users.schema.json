@@ -452,6 +452,22 @@
 				"write": "'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
 			}
 		},
+		"huawei_openid": {
+			"bsonType": "string",
+			"description": "Huawei openid",
+			"permission": {
+				"read": "'READ_UNI_ID_USERS' in auth.permission",
+				"write": "'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
+			}
+		},
+		"huawei_unionid": {
+			"bsonType": "string",
+			"description": "Huawei unionid",
+			"permission": {
+				"read": "'READ_UNI_ID_USERS' in auth.permission",
+				"write": "'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
+			}
+		},
 		"third_party": {
 			"bsonType": "object",
 			"description": "三方平台凭证",

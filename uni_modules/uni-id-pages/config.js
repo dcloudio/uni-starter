@@ -19,12 +19,18 @@ export default {
     // #ifdef APP
     'univerify',
     // #endif
+    // #ifndef MP-HARMONY
     'weixin',
+    // #endif
     'username',
     // #ifdef APP
     'apple',
     // #endif
-    'smsCode'
+    'smsCode',
+    // #ifdef APP-HARMONY || MP-HARMONY
+    'huawei',
+    'huaweiMobile'
+    // #endif
   ],
   // 政策协议
   agreements: {
