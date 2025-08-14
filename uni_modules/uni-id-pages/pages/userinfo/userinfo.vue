@@ -87,11 +87,6 @@ const uniIdCo = uniCloud.importObject("uni-id-co")
 			this.hasPwd = res.isPasswordSet
 		},
 		methods: {
-			// 自动化测试辅助方法
-			async updateUserInfoForTest() {
-				await mutations.updateUserInfo()
-				return store.userInfo
-			},
 			login() {
 				uni.navigateTo({
 					url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd',

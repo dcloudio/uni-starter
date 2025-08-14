@@ -62,51 +62,63 @@
 						"text": "微信登录",
 						"logo": "/uni_modules/uni-id-pages/static/login/uni-fab-login/weixin.png",
 					},
+					{
+						"id": "huawei",
+						"text": "华为登录",
+						"logo": "/uni_modules/uni-id-pages/static/login/uni-fab-login/huawei.png",
+						"path": "/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=huawei"
+					},
+					{
+						"id": "huaweiMobile",
+						"text": "华为账号一键登录",
+						"logo": "/uni_modules/uni-id-pages/static/login/uni-fab-login/huawei.png",
+						"path": "/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=huaweiMobile"
+					},
 					// #ifndef MP-WEIXIN
 					{
 						"id": "apple",
 						"text": "苹果登录",
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/apple.png",
+						"logo": "/uni_modules/uni-id-pages/static/uni-fab-login/apple.png",
 					},
 					{
 						"id": "univerify",
 						"text": "一键登录",
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/univerify.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/univerify.png",
 					},
 					{
 						"id": "taobao",
 						"text": "淘宝登录", //暂未提供该登录方式的接口示例
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/taobao.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/taobao.png",
 					},
 					{
 						"id": "facebook",
 						"text": "脸书登录", //暂未提供该登录方式的接口示例
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/facebook.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/facebook.png",
 					},
 					{
 						"id": "alipay",
 						"text": "支付宝登录", //暂未提供该登录方式的接口示例
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/alipay.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/alipay.png",
 					},
 					{
 						"id": "qq",
 						"text": "QQ登录", //暂未提供该登录方式的接口示例
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/qq.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/qq.png",
 					},
 					{
 						"id": "google",
 						"text": "谷歌登录", //暂未提供该登录方式的接口示例
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/google.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/google.png",
 					},
 					{
 						"id": "douyin",
 						"text": "抖音登录", //暂未提供该登录方式的接口示例
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/douyin.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/douyin.png",
 					},
 					{
 						"id": "sinaweibo",
 						"text": "新浪微博", //暂未提供该登录方式的接口示例
-						"logo": "/uni_modules/uni-id-pages/static/app-plus/uni-fab-login/sinaweibo.png",
+						"logo": "/uni_modules/uni-id-pages/static/app/uni-fab-login/sinaweibo.png",
 					}
 					// #endif
 				],
@@ -202,7 +214,7 @@
 				return '/' + pages[pages.length - n].route
 			},
 			toPage(path,index = 0) {
-				//console.log('比较', this.getRoute(1),this.getRoute(2), path)
+				console.log('比较', this.getRoute(1),this.getRoute(2), path)
 				if (this.getRoute(1) == path.split('?')[0] && this.getRoute(1) ==
 					'/uni_modules/uni-id-pages/pages/login/login-withoutpwd') {
 					//如果要被打开的页面已经打开，且这个页面是 /uni_modules/uni-id-pages/pages/index/index 则把类型参数传给他
@@ -233,7 +245,7 @@
 				}
 			},
 			async login_before(type, navigateBack = true, options = {}) {
-				console.log(type);
+				console.log(type, options);
 				//提示空实现
 				if (["qq",
 						"xiaomi",
@@ -251,24 +263,31 @@
 					});
 				}
 
+				console.log('检查当前环境是否支持这种登录方式')
 				//检查当前环境是否支持这种登录方式
 				// #ifdef APP
 				let isAppExist = true
 				await new Promise((callback) => {
-					plus.oauth.getServices(oauthServices => {
-						let index = oauthServices.findIndex(e => e.id == type)
-						if(index != -1){
-							isAppExist = oauthServices[index].nativeClient
-							callback()
-						}else{
-							return uni.showToast({
-								title: '当前设备不支持此登录，请选择其他登录方式',
-								icon: 'none',
-								duration: 3000
-							});
+					console.log('uni.getProvider', uni.getProvider)
+					uni.getProvider({
+						service: 'oauth',
+						success: (res) => {
+							const provider = res.providers.find(item => item.id === type)
+							console.log('res', res)
+							if (provider) {
+								isAppExist = provider?.isAppExist ?? true
+								callback()
+							} else {
+								return uni.showToast({
+									title: '当前设备不支持此登录，请选择其他登录方式',
+									icon: 'none',
+									duration: 3000
+								});
+							}
+						},
+						fail: () => {
+							throw new Error('获取服务供应商失败：' + JSON.stringify(err))
 						}
-					}, err => {
-						throw new Error('获取服务供应商失败：' + JSON.stringify(err))
 					})
 				})
 				// #endif
@@ -290,7 +309,6 @@
 						duration: 3000
 					});
 				}
-
 				//判断是否需要弹出隐私协议授权框
 				let needAgreements = (config?.agreements?.scope || []).includes('register')
 				if (type != 'univerify' && needAgreements && !this.agree) {
@@ -299,7 +317,6 @@
 						this.login_before(type, navigateBack, options)
 					})
 				}
-
 				// #ifdef H5
 					if(type == 'weixin'){
 						// console.log('开始微信网页登录');
@@ -340,8 +357,11 @@
 						}
 					}
 				// #endif
-
+				console.log('login ----')
 				uni.showLoading({
+					// #ifdef MP-HARMONY
+					title: "正在登录",
+					// #endif
 					mask: true
 				})
 
@@ -419,7 +439,7 @@
 					})
 				}
 
-				if (type === 'weixinMobile') {
+				if (type === 'weixinMobile' || type === 'huaweiMobile') {
 					return this.login({
 						phoneCode: options.phoneNumberCode
 					}, type)
@@ -439,12 +459,18 @@
 							Object.assign(e.authResult, res.userInfo)
 							uni.hideLoading()
 						}
-						this.login(type == 'weixin' ? {
+
+						this.login(['huawei', 'weixin'].includes(type) ? {
 							code: e.code
 						} : e.authResult, type)
 					},
 					fail: async (err) => {
-						console.log(err);
+						console.error(JSON.stringify(err));
+						uni.showModal({
+							content: `登录失败; code: ${err.errCode || -1}`,
+							confirmText: "知道了",
+							showCancel: false
+						});
 						uni.hideLoading()
 					}
 				})
@@ -563,6 +589,6 @@
 		margin-top: 6px;
 		color: #999;
 		font-size: 10px;
-		width: 70px;
+		width: 80px;
 	}
 </style>

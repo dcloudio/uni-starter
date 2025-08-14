@@ -12,8 +12,8 @@
 					:inputBorder="false" v-model="username" placeholder="请输入手机号/用户名/邮箱" trim="all" />
 			</uni-forms-item>
 			<uni-forms-item name="password">
-				<uni-easyinput :focus="focusPassword" @blur="focusPassword = false" class="input-box" clearable
-					type="password" :inputBorder="false" v-model="password" placeholder="请输入密码" trim="all" />
+					<uni-easyinput :focus="focusPassword" @blur="focusPassword = false" class="input-box" clearable
+					               type="password" :inputBorder="false" v-model="password" placeholder="请输入密码" trim="all" />
 			</uni-forms-item>
 		</uni-forms>
 		<uni-captcha v-if="needCaptcha" focus ref="captcha" scene="login-by-pwd" v-model="captcha" />
@@ -51,8 +51,7 @@
 				"needCaptcha": false,
 				"focusUsername": false,
 				"focusPassword": false,
-				"logo": "/static/logo.png",
-				"isTest":false
+				"logo": "/static/logo.png"
 			}
 		},
 		onShow() {
@@ -80,7 +79,7 @@
 			/**
 			 * 密码登录
 			 */
-			async pwdLogin() {
+			pwdLogin() {
 				if (!this.password.length) {
 					this.focusPassword = true
 					return uni.showToast({
@@ -105,10 +104,9 @@
 						duration: 3000
 					});
 				}
-				if(!this.isTest){
-					if (this.needAgreements && !this.agree) {
-						return this.$refs.agreements.popup(this.pwdLogin)
-					}
+
+				if (this.needAgreements && !this.agree) {
+					return this.$refs.agreements.popup(this.pwdLogin)
 				}
 
 				let data = {
@@ -124,11 +122,8 @@
 					data.username = this.username
 				}
 
-				return await uniIdCo.login(data).then(e => {
-          if(!this.isTest){
-          	this.loginSuccess(e)
-          }
-					return e
+				uniIdCo.login(data).then(e => {
+					this.loginSuccess(e)
 				}).catch(e => {
 					if (e.errCode == 'uni-id-captcha-required') {
 						this.needCaptcha = true
@@ -136,7 +131,6 @@
 						//登录失败，自动重新获取验证码
 						this.$refs.captcha.getImageCaptcha()
 					}
-					return e
 				})
 			},
 			/* 前往注册 */

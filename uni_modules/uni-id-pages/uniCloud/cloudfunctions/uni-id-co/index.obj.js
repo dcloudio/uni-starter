@@ -33,7 +33,9 @@ const {
   loginByAlipay,
   loginByQQ,
   loginByApple,
-  loginByWeixinMobile
+  loginByWeixinMobile,
+  loginByHuawei,
+  loginByHuaweiMobile
 } = require('./module/login/index')
 const {
   logout
@@ -49,7 +51,10 @@ const {
   unbindWeixin,
   unbindAlipay,
   unbindQQ,
-  unbindApple
+  unbindApple,
+  bindHuawei,
+  unbindHuawei,
+  bindMobileByHuawei
 } = require('./module/relate/index')
 const {
   setPwd,
@@ -222,7 +227,7 @@ module.exports = {
       messages: JSON.parse(JSON.stringify(messages))
     })
     if (!messages[i18n.locale]) {
-      i18n.setLocale(fallbackLocale)      
+      i18n.setLocale(fallbackLocale)
     }
     this.t = i18n.t.bind(i18n)
 
@@ -417,6 +422,8 @@ module.exports = {
    */
   loginByApple,
   loginByWeixinMobile,
+  loginByHuawei,
+  loginByHuaweiMobile,
   /**
    * 用户退出登录
    * @tutorial https://uniapp.dcloud.net.cn/uniCloud/uni-id-pages.html#logout
@@ -692,5 +699,8 @@ module.exports = {
    * @param {Boolean} params.decryptData 是否解密数据
    * @returns
    */
-  getRealNameInfo
+  getRealNameInfo,
+  bindHuawei,
+  unbindHuawei,
+  bindMobileByHuawei
 }

@@ -81,35 +81,33 @@
 			/**
 			 * 完成并提交
 			 */
-			async submit() {
-				return await this.$refs.form.validate().then(async res => {
-					let {
-						oldPassword,
-						newPassword
-					} = this.formData
-					return await uniIdCo.updatePwd({
+			submit() {
+				this.$refs.form.validate()
+					.then(res => {
+						let {
 							oldPassword,
 							newPassword
-						}).then(e => {
-							uni.removeStorageSync('uni_id_token');
-							uni.setStorageSync('uni_id_token_expired', 0)
-							uni.redirectTo({
-								url:'/uni_modules/uni-id-pages/pages/login/login-withpwd'
+						} = this.formData
+						uniIdCo.updatePwd({
+								oldPassword,
+								newPassword
+							}).then(e => {
+								uni.removeStorageSync('uni_id_token');
+								uni.setStorageSync('uni_id_token_expired', 0)
+								uni.redirectTo({
+									url:'/uni_modules/uni-id-pages/pages/login/login-withpwd'
+								})
+							}).catch(e => {
+								uni.showModal({
+									content: e.message,
+									showCancel: false
+								});
 							})
-							return e
-						}).catch(e => {
-							uni.showModal({
-								content: e.message,
-								showCancel: false
-							});
-							return e
-						})
-				}).catch(errors => {
-					let key = errors[0].key
-					key = key.replace(key[0], key[0].toUpperCase())
-					this['focus' + key] = true
-					return errors
-				})
+					}).catch(errors => {
+						let key = errors[0].key
+						key = key.replace(key[0], key[0].toUpperCase())
+						this['focus' + key] = true
+					})
 			}
 		}
 	}

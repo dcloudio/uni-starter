@@ -1,25 +1,24 @@
 {
   "id": "uni-cloud-s2s",
-  "displayName": "服务空间与服务器安全通讯模块",
+  "displayName": "uni-cloud-s2s公共模块",
   "version": "1.0.1",
-  "description": "用于解决服务空间与服务器通讯时互相信任问题",
+  "description": "用于解决uniCloud服务空间与传统服务器通讯时互相信任的问题",
   "keywords": [
     "安全通讯",
     "服务器请求云函数",
     "云函数请求服务器"
 ],
   "repository": "",
-  "engines": {
-    "HBuilderX": "^3.1.0"
+"engines": {
   },
   "dcloudext": {
     "type": "unicloud-template-function",
     "sale": {
       "regular": {
-        "price": "0.00"
+        "price": 0
       },
       "sourcecode": {
-        "price": "0.00"
+        "price": 0
       }
     },
     "contact": {

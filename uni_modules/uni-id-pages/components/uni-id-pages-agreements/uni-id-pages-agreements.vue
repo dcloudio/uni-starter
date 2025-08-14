@@ -33,7 +33,7 @@
 	import config from '@/uni_modules/uni-id-pages/config.js'
 	let retryFun = ()=>console.log('为定义')
 	/**
-		* uni-id-pages-agreements 
+		* uni-id-pages-agreements
 		* @description 用户服务协议和隐私政策条款组件
 		* @property {String,Boolean} scope = [register|login]	作用于哪种场景如：register 注册（包括登录并注册，如：微信登录、苹果登录、短信验证码登录）、login 登录。默认值为：register
 	*/
@@ -74,12 +74,22 @@
 			popup(Fun){
 				this.needPopupAgreements = true
 				// this.needAgreements = true
+
+				//::TODO 鸿蒙元服务暂不支持 createAnimation，等支持后再打开
+				// #ifdef MP-HARMONY
+					return uni.showModal({
+						title: "提示",
+						content: `请先阅读并同意${this.agreements.map(item=>`“${item.title}”`).join('和')}`,
+					})
+				// #endif
+				// #ifndef MP-HARMONY
 				this.$nextTick(()=>{
 					if(Fun){
 						retryFun = Fun
 					}
 					this.$refs.popupAgreement.open()
 				})
+				// #endif
 			},
 			navigateTo({
 				url,
@@ -145,7 +155,7 @@
 		color: #04498c;
 		cursor: pointer;
 	}
-	
+
 	.checkbox-box ::v-deep .uni-checkbox-input{
 		border-radius: 100%;
 	}
@@ -155,12 +165,12 @@
 		color: #FFFFFF !important;
 		background-color: $uni-color-primary;
 	}
-	
+
 	.content{
 		flex-wrap: wrap;
 		flex-direction: row;
 	}
-	
+
 	.root ::v-deep .uni-popup__error{
 		color: #333333;
 	}

@@ -53,9 +53,7 @@
 		mutations
 	} from '@/uni_modules/uni-id-pages/common/store.js'
 
-	const uniIdCo = uniCloud.importObject("uni-id-co",{
-		customUI:true
-	})
+	const uniIdCo = uniCloud.importObject("uni-id-co")
 	export default {
 		mixins: [mixin],
 		data() {
@@ -72,8 +70,7 @@
 				focusNickname: false,
 				focusPassword: false,
 				focusPassword2: false,
-				logo: "/static/logo.png",
-				isTest:false
+				logo: "/static/logo.png"
 			}
 		},
 		onReady() {
@@ -94,7 +91,7 @@
 			 * 触发表单提交
 			 */
 			submit() {
-				return this.$refs.form.validate().then(async (res) => {
+				this.$refs.form.validate().then((res) => {
 					if (this.formData.captcha.length != 4) {
 						this.$refs.captcha.focusCaptchaInput = true
 						return uni.showToast({
@@ -103,31 +100,26 @@
 							duration: 3000
 						});
 					}
-					if(!this.isTest){
-						if (this.needAgreements && !this.agree) {
-							return this.$refs.agreements.popup(() => {
-								this.submitForm(res)
-							})
-						}
+					if (this.needAgreements && !this.agree) {
+						return this.$refs.agreements.popup(() => {
+							this.submitForm(res)
+						})
 					}
-					return await this.submitForm(res)
+					this.submitForm(res)
 				}).catch((errors) => {
 					let key = errors[0].key
 					key = key.replace(key[0], key[0].toUpperCase())
 					this['focus' + key] = true
-					return errors
 				})
 			},
-			async submitForm(params) {
-				return await uniIdCo.registerUser(this.formData).then(e => {
+			submitForm(params) {
+				uniIdCo.registerUser(this.formData).then(e => {
 						this.loginSuccess(e)
-						return e
 					})
 					.catch(e => {
 						console.log(e.message);
 						//更好的体验：登录错误，直接刷新验证码
 						this.$refs.captcha.getImageCaptcha()
-						return e
 					})
 			},
 			navigateBack() {
