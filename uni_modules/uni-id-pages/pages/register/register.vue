@@ -70,7 +70,8 @@
 				focusNickname: false,
 				focusPassword: false,
 				focusPassword2: false,
-				logo: "/static/logo.png"
+				logo: "/static/logo.png",
+				isTest:false
 			}
 		},
 		onReady() {
@@ -91,7 +92,7 @@
 			 * 触发表单提交
 			 */
 			submit() {
-				this.$refs.form.validate().then((res) => {
+				return this.$refs.form.validate().then(async(res) => {
 					if (this.formData.captcha.length != 4) {
 						this.$refs.captcha.focusCaptchaInput = true
 						return uni.showToast({
@@ -100,26 +101,29 @@
 							duration: 3000
 						});
 					}
+					if(!this.isTest)
 					if (this.needAgreements && !this.agree) {
 						return this.$refs.agreements.popup(() => {
 							this.submitForm(res)
 						})
 					}
-					this.submitForm(res)
+					return await this.submitForm(res)
 				}).catch((errors) => {
 					let key = errors[0].key
 					key = key.replace(key[0], key[0].toUpperCase())
 					this['focus' + key] = true
 				})
 			},
-			submitForm(params) {
-				uniIdCo.registerUser(this.formData).then(e => {
+			async submitForm(params) {
+				return await uniIdCo.registerUser(this.formData).then(e => {
 						this.loginSuccess(e)
+						return e
 					})
 					.catch(e => {
 						console.log(e.message);
 						//更好的体验：登录错误，直接刷新验证码
 						this.$refs.captcha.getImageCaptcha()
+						return e
 					})
 			},
 			navigateBack() {

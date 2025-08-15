@@ -51,7 +51,8 @@
 				"needCaptcha": false,
 				"focusUsername": false,
 				"focusPassword": false,
-				"logo": "/static/logo.png"
+				"logo": "/static/logo.png",
+				"isTest":false
 			}
 		},
 		onShow() {
@@ -79,7 +80,7 @@
 			/**
 			 * 密码登录
 			 */
-			pwdLogin() {
+			async pwdLogin() {
 				if (!this.password.length) {
 					this.focusPassword = true
 					return uni.showToast({
@@ -104,10 +105,12 @@
 						duration: 3000
 					});
 				}
-
-				if (this.needAgreements && !this.agree) {
-					return this.$refs.agreements.popup(this.pwdLogin)
+				if(!this.isTest){
+					if (this.needAgreements && !this.agree) {
+						return this.$refs.agreements.popup(this.pwdLogin)
+					}
 				}
+				
 
 				let data = {
 					"password": this.password,
@@ -122,8 +125,11 @@
 					data.username = this.username
 				}
 
-				uniIdCo.login(data).then(e => {
-					this.loginSuccess(e)
+				return await uniIdCo.login(data).then(e => {
+					if(!this.isTest){
+						this.loginSuccess(e)
+					}
+					return e
 				}).catch(e => {
 					if (e.errCode == 'uni-id-captcha-required') {
 						this.needCaptcha = true
@@ -131,6 +137,7 @@
 						//登录失败，自动重新获取验证码
 						this.$refs.captcha.getImageCaptcha()
 					}
+					return e
 				})
 			},
 			/* 前往注册 */

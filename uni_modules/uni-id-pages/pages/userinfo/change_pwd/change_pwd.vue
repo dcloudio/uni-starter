@@ -81,14 +81,14 @@
 			/**
 			 * 完成并提交
 			 */
-			submit() {
-				this.$refs.form.validate()
-					.then(res => {
+			async submit() {
+				return await this.$refs.form.validate()
+					.then(async res => {
 						let {
 							oldPassword,
 							newPassword
 						} = this.formData
-						uniIdCo.updatePwd({
+						return await uniIdCo.updatePwd({
 								oldPassword,
 								newPassword
 							}).then(e => {
@@ -97,16 +97,19 @@
 								uni.redirectTo({
 									url:'/uni_modules/uni-id-pages/pages/login/login-withpwd'
 								})
+								return e
 							}).catch(e => {
 								uni.showModal({
 									content: e.message,
 									showCancel: false
 								});
+								return e
 							})
 					}).catch(errors => {
 						let key = errors[0].key
 						key = key.replace(key[0], key[0].toUpperCase())
 						this['focus' + key] = true
+						return errors
 					})
 			}
 		}
