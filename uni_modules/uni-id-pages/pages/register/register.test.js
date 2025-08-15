@@ -4,6 +4,7 @@ describe('register', () => {
 	beforeAll(async () => {
 		page = await program.reLaunch(PAGE_PATH)
 		await page.waitFor('view')
+		await page.waitFor(2000)
 	})
 	it('注册账号', async () => {
 		await page.setData({
