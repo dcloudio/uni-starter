@@ -53,7 +53,9 @@
 		mutations
 	} from '@/uni_modules/uni-id-pages/common/store.js'
 
-	const uniIdCo = uniCloud.importObject("uni-id-co")
+	const uniIdCo = uniCloud.importObject("uni-id-co",{
+		customUI:true
+	})
 	export default {
 		mixins: [mixin],
 		data() {
@@ -101,17 +103,19 @@
 							duration: 3000
 						});
 					}
-					if(!this.isTest)
-					if (this.needAgreements && !this.agree) {
-						return this.$refs.agreements.popup(() => {
-							this.submitForm(res)
-						})
+					if(!this.isTest){
+						if (this.needAgreements && !this.agree) {
+							return this.$refs.agreements.popup(() => {
+								this.submitForm(res)
+							})
+						}
 					}
 					return await this.submitForm(res)
 				}).catch((errors) => {
 					let key = errors[0].key
 					key = key.replace(key[0], key[0].toUpperCase())
 					this['focus' + key] = true
+					return errors
 				})
 			},
 			async submitForm(params) {
