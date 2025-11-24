@@ -1,7 +1,8 @@
 let pageIndex = 0;
 let page;
 const pages = [
-	'/uni_modules/uni-id-pages/pages/login/login-withpwd'
+	'/uni_modules/uni-id-pages/pages/login/login-withpwd',
+	'/uni_modules/uni-id-pages/pages/login/login-smscode'
 ]
 const platformInfo = process.env.uniTestPlatformInfo.toLocaleLowerCase()
 const isHarmony = platformInfo.startsWith('harmony')
