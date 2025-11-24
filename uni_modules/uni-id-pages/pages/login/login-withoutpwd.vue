@@ -15,10 +15,22 @@
 				<view v-else style="position: relative">
 					<button v-if="type ==='weixinMobile'" type="primary" open-type="getPhoneNumber" @getphonenumber="quickLogin"
 					        class="uni-btn">微信授权手机号登录</button>
+					<!-- #ifdef APP-HARMONY -->
+					<app-harmony-get-phone-number
+						v-if="type === 'huaweiMobile'"
+						@getphonenumber="quickLogin"
+					>
+						<button class="quickLoginBtn" style="padding: 0; display: flex">
+							<image :src="imgSrc" mode="widthFix"></image>
+						</button>
+					</app-harmony-get-phone-number>
+					<!-- #endif -->
+					<!-- #ifdef MP-HARMONY -->
 					<button v-if="type === 'huaweiMobile'" open-type="getPhoneNumber" @getphonenumber="quickLogin"
 					        class="quickLoginBtn" style="padding: 0; display: flex">
 						<image :src="imgSrc" mode="widthFix"></image>
 					</button>
+					<!-- #endif -->
 					<view v-if="this.needAgreements && !this.agree" class="mobile-login-agreement-layer" @click="showAgreementModal"></view>
 				</view>
 				<uni-id-pages-agreements scope="register" ref="agreements"></uni-id-pages-agreements>

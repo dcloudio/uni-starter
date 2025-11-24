@@ -8,6 +8,8 @@
 <script>
 	export default {
 		onLoad({url,title}) {
+			url = decodeURIComponent(url)
+
 			if(url.substring(0, 4) != 'http'){
 				uni.showModal({
 					title:"错误",

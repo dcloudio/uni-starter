@@ -12,7 +12,7 @@
 		mutations
 	} from '@/uni_modules/uni-id-pages/common/store.js'
 	/**
-	* uni-id-pages-avatar 
+	* uni-id-pages-avatar
 	* @description 用户头像组件
 	* @property {String} width	图片的宽，默认为：50px
 	* @property {String} height	图片的高，默认为：50px
@@ -47,7 +47,8 @@
 		},
 		async mounted() {
 			// #ifdef H5
-			this.isPC = !['ios', 'android'].includes(uni.getSystemInfoSync().platform);
+			const platform = uni.getSystemInfoSync().platform
+			this.isPC = !['ios', 'android'].includes(platform) || platform === 'harmonyos';
 			// #endif
 		},
 		computed: {
@@ -100,7 +101,7 @@
 				// #ifdef MP-WEIXIN
 				return false // 微信小程序走 bindchooseavatar方法
 				// #endif
-				
+
 				// #ifndef MP-WEIXIN
 				if(!this.hasLogin){
 					return uni.navigateTo({
@@ -127,7 +128,7 @@
 								// #endif
 							},
 							filePath = res.tempFilePaths[0]
-							
+
 						//非app端剪裁头像，app端用内置的原生裁剪
 						// #ifdef H5
 						if (!this.isPC) {
@@ -148,7 +149,7 @@
 							})
 						}
 						// #endif
-						
+
 						let cloudPath = this.userInfo._id + '' + Date.now()
 						avatar_file.name = cloudPath
 						uni.showLoading({
@@ -182,7 +183,7 @@
 	.box{
 		padding: 0;
 	}
-	
+
 	.chooseAvatar {
 		/* #ifndef APP-NVUE */
 		display: inline-block;

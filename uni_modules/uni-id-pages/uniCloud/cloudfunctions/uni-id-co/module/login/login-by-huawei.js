@@ -1,7 +1,4 @@
 const {
-  initWeixin
-} = require('../../lib/third-party/index')
-const {
   ERROR
 } = require('../../common/error')
 const {
@@ -121,7 +118,7 @@ module.exports = async function (params = {}) {
       // eslint-disable-next-line n/no-deprecated-api
       const avatarPath = url.parse(avatar).pathname
       const extName = avatarPath.indexOf('.') > -1 ? url.parse(avatar).pathname.split('.').pop() : 'jpg'
-      const cloudPath = `user/avatar/${openid.slice(-8) + Date.now()}-avatar.${extName}`
+      const cloudPath = `user/avatar/${openId.slice(-8) + Date.now()}-avatar.${extName}`
       const getAvatarRes = await uniCloud.httpclient.request(avatar)
       if (getAvatarRes.status >= 400) {
         throw {
