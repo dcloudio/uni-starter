@@ -272,7 +272,14 @@
 					uni.getProvider({
 						service: 'oauth',
 						success: (res) => {
-							const provider = res.providers.find(item => item.id === type)
+							const provider = res.providers.find(item => {
+
+								if (item.id === 'huawei') {
+									return ['huawei', 'huaweiMobile'].includes(type)
+								}
+
+								return item.id === type
+							})
 							console.log('res', res)
 							if (provider) {
 								isAppExist = provider?.isAppExist ?? true
