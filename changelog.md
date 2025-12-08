@@ -1,3 +1,5 @@
+## 2.2.10（2025-12-08）
+新增 内置`uni-id/config.json`文件，[参考文档云端配置config.json的说明完成配置](https://doc.dcloud.net.cn/uniCloud/uni-id/summary.html#config)
 ## 2.2.9（2025-12-08）
 更新 依赖的uni-id-pages的版本为1.1.25（新增 鸿蒙应用的华为账号登录及华为账号授权手机号登录）
 ## 2.2.8（2025-08-14）
