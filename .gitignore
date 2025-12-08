@@ -5,3 +5,8 @@ node_modules
 .vite/
 uni_modules_tools/copy
 package-lock.json
+/uni_modules\uni-config-center\uniCloud\cloudfunctions\common\uni-config-center\uni-id\config.json
+/manifest.json
+/env.js
+/vue.config.js
+/uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center/captcha-config/
