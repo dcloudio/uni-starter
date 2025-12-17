@@ -1,3 +1,6 @@
+## 2.2.11（2025-12-17）
+更新 依赖的uni-id-common版本为1.0.19（增加配置参数缺失时的错误提示，指明配置文件路径）
+修复 鸿蒙端编译报错，将uni-get-phone-number插件app_icon改成startIcon
 ## 2.2.10（2025-12-08）
 新增 内置`uni-id/config.json`文件，[参考文档云端配置config.json的说明完成配置](https://doc.dcloud.net.cn/uniCloud/uni-id/summary.html#config)
 ## 2.2.9（2025-12-08）
