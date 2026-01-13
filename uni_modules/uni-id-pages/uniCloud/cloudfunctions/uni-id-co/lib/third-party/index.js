@@ -25,7 +25,13 @@ module.exports = {
     const oauthConfig = this.configUtils.getOauthConfig({ provider: 'alipay' })
     return createApi(AliAccount, {
       appId: oauthConfig.appid,
-      privateKey: oauthConfig.privateKey
+      // 三方应用授权token
+      appAuthToken: oauthConfig.appAuthToken,
+      // 私钥
+      privateKey: oauthConfig.privateKey,
+      // 证书模式
+      appCertPath: oauthConfig.appCertPath, // 应用公钥证书
+      alipayRootCertPath: oauthConfig.alipayRootCertPath // 支付宝根证书
     })
   },
   initApple: function () {
