@@ -187,7 +187,7 @@ struct GetAuthPhoneNumber {
           show: this.show,
           params: {
             appInfo: {
-              appIcon: $r('app.media.app_icon'),
+              appIcon: $r('app.media.startIcon'),
               appName: $r('app.string.app_name'),
             },
             privacyText: this.privacyText,
