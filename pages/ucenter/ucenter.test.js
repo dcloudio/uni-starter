@@ -49,7 +49,7 @@ describe('ucenter', () => {
 	it('验证积分功能', async () => {
 		if (!hasLogin) return
 		const scoreRes = await page.callMethod('getScore')
-		if (scoreRes.score) {
+		if (scoreRes && scoreRes.score) {
 			expect(scoreRes.score).not.toBeUndefined()
 			expect(scoreRes.balance).toBeGreaterThanOrEqual(scoreRes.score)
 		}
