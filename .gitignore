@@ -5,3 +5,4 @@ node_modules
 .vite/
 uni_modules_tools/copy
 package-lock.json
+/harmony-configs/
