@@ -1,7 +1,7 @@
 {
   "id": "uni-starter",
   "displayName": "uni-starter",
-  "version": "2.2.14",
+  "version": "2.2.15",
   "description": "云端一体应用快速开发基本项目模版",
   "keywords": [
     "login",
@@ -77,7 +77,8 @@
             "jd": "-",
             "harmony": "-",
             "qq": "-",
-            "lark": "-"
+            "lark": "-",
+            "xhs": "-"
           },
           "quickapp": {
             "huawei": "-",
