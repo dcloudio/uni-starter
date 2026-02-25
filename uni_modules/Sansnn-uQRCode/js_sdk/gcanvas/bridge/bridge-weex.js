@@ -1,6 +1,6 @@
 const isWeex = typeof WXEnvironment !== 'undefined';
 const isWeexIOS = isWeex && /ios/i.test(WXEnvironment.platform);
-const isWeexAndroid = isWeex && !isWeexIOS;
+const isWeexAndroid = isWeex && (/android|harmonyos/i.test(WXEnvironment.platform));
 
 import GLmethod from '../context-webgl/GLmethod';
 

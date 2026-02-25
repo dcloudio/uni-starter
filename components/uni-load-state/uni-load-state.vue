@@ -92,7 +92,8 @@
 				}
 			},
 			openSettings() {
-				if (uni.getSystemInfoSync().platform == "ios") {
+				const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
+				if (platform === "ios") {
 					var UIApplication = plus.ios.import("UIApplication");
 					var application2 = UIApplication.sharedApplication();
 					var NSURL2 = plus.ios.import("NSURL");
@@ -101,7 +102,7 @@
 					plus.ios.deleteObject(setting2);
 					plus.ios.deleteObject(NSURL2);
 					plus.ios.deleteObject(application2);
-				} else {
+				} else if (platform === "android" || platform === "harmonyos") {
 					var Intent = plus.android.importClass("android.content.Intent");
 					var Settings = plus.android.importClass("android.provider.Settings");
 					var mainActivity = plus.android.runtimeMainActivity();

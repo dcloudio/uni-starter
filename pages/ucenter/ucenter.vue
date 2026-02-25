@@ -222,7 +222,8 @@
 			 */
 			gotoMarket() {
 				// #ifdef APP-PLUS
-				if (uni.getSystemInfoSync().platform == "ios") {
+				const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
+				if (platform === "ios") {
 					// 这里填写appstore应用id
 					let appstoreid = this.appConfig.marketId.ios; // 'id1417078253';
 					console.log({appstoreid});
@@ -230,7 +231,7 @@
 						console.log('plus.runtime.openURL err:' + JSON.stringify(err));
 					});
 				}
-				if (uni.getSystemInfoSync().platform == "android") {
+				if (platform === "android" || platform === "harmonyos") {
 					var Uri = plus.android.importClass("android.net.Uri");
 					var uri = Uri.parse("market://details?id=" + this.appConfig.marketId.android);
 					var Intent = plus.android.importClass('android.content.Intent');
