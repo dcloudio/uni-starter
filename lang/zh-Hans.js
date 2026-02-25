@@ -68,6 +68,7 @@ export default {
 		currentScore: "当前积分为",
 		noScore: "当前无积分",
 		notLogged: "未登录",
+		unset: "未设置"
 	},
 	userinfo:{
 		navigationBarTitle:"个人资料",
