@@ -71,9 +71,10 @@ class Gps {
 			plus.nativeUI.confirm("手机定位权限没有开启，是否去开启？", (e) => {
 				this.lock = false
 				if (e.index == 0) {
-					if (uni.getSystemInfoSync().platform == "ios") {
+					const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
+					if (platform === "ios") {
 						plus.runtime.openURL("app-settings://");
-					} else {
+					} else if (platform === "android" || platform === "harmonyos") {
 						var main = plus.android.runtimeMainActivity(); //获取activity
 						var Intent = plus.android.importClass('android.content.Intent');
 						var Settings = plus.android.importClass('android.provider.Settings');
@@ -118,10 +119,11 @@ class Gps {
 		}
 	}
 	async checkAppGps() {
-		if (uni.getSystemInfoSync().platform == "ios" && !permision.judgeIosPermission("location")) {
+		const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
+		if (platform === "ios" && !permision.judgeIosPermission("location")) {
 			return false
 		}
-		if (uni.getSystemInfoSync().platform != "ios" && await permision.requestAndroidPermission(
+		if ((platform === "android" || platform === "harmonyos") && await permision.requestAndroidPermission(
 				"android.permission.ACCESS_FINE_LOCATION") != 1) {
 			return false
 		}

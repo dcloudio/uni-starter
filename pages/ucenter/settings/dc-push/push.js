@@ -88,7 +88,8 @@ function settingInIos(){
  * android打开应用设置页面
  */
 function settingInAndroid(){
-	if (uni.getSystemInfoSync().platform == "android") {
+	const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
+	if (platform === "android" || platform === "harmonyos") {
 		var main = plus.android.runtimeMainActivity();
 		var Intent = plus.android.importClass('android.content.Intent');  
 		var Settings = plus.android.importClass('android.provider.Settings');  
@@ -101,10 +102,11 @@ function settingInAndroid(){
  * 打开应用设置界面
  */
 function setting(){
-	if (uni.getSystemInfoSync().platform == "ios") {
+	const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
+	if (platform === "ios") {
 		settingInIos();
 	}
-	if (uni.getSystemInfoSync().platform == "android") {
+	if (platform === "android" || platform === "harmonyos") {
 		settingInAndroid();
 	}
 }

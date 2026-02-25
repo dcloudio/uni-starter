@@ -5,6 +5,8 @@ import {
 
 const platform_iOS = 'iOS';
 const platform_Android = 'Android';
+const platform_HarmonyOS = 'HarmonyOS';
+const db = uniCloud.database();
 
 function getValidator(fields) {
 	let reuslt = {}
@@ -56,6 +58,10 @@ export default {
 					{
 						"value": "iOS",
 						"text": "苹果"
+					},
+					{
+						"value": "HarmonyOS",
+						"text": "鸿蒙"
 					}
 				],
 				"type_localdata": [{
@@ -97,7 +103,9 @@ export default {
 				.platform_localdata : [this.formOptions.platform_localdata[0]]
 		},
 		uni_platform() {
-			return (this.isiOS ? platform_iOS : platform_Android).toLocaleLowerCase()
+			if (this.isiOS) return platform_iOS.toLocaleLowerCase();
+			if (this.formData.platform && this.formData.platform.includes(platform_HarmonyOS)) return platform_HarmonyOS.toLocaleLowerCase();
+			return platform_Android.toLocaleLowerCase();
 		}
 	},
 	methods: {
