@@ -67,6 +67,7 @@ export default {
 		currentScore: "The current score is ",
 		noScore: "There are currently no points",
 		notLogged: "not logged in",
+		unset: "unset"
 	},
 	userinfo: {
 		navigationBarTitle:"My Profile",
