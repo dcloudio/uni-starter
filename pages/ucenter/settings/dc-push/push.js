@@ -4,7 +4,8 @@
 function isTurnedOnPush(){
 	var isOn = undefined;
 	try{
-		if('iOS' == plus.os.name){
+		const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
+		if(platform === "ios"){
 			var types = 0;
 			var app = plus.ios.invoke('UIApplication', 'sharedApplication');
 			var settings = plus.ios.invoke(app, 'currentUserNotificationSettings');
@@ -16,10 +17,12 @@ function isTurnedOnPush(){
 			}
 			plus.ios.deleteObject(app);
 			isOn = (0!=types);
-		}else{
+		}else if(platform === "android"){
 			var main = plus.android.runtimeMainActivity();
 			var manager = plus.android.invoke('com.igexin.sdk.PushManager', 'getInstance');
 			isOn = plus.android.invoke(manager, 'isPushTurnedOn', main);
+		}else if(platform === "harmonyos"){
+			isOn = false;
 		}
 	}catch(e){
 		console.error('exception in isTurnedOnPush@dc-push!!');
@@ -34,15 +37,21 @@ function isTurnedOnPush(){
  */
 function turnOnPush(){
 	try{
-		if('iOS' == plus.os.name){
+		const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
+		if(platform === "ios"){
 			// 如果设置中没有开启通知，则打开应用的设置界面
 			if(!isTurnedOnPush()){
 				settingInIos();
 			}
-		}else{
+		}else if(platform === "android"){
 			var main = plus.android.runtimeMainActivity();
 			var manager = plus.android.invoke('com.igexin.sdk.PushManager', 'getInstance');
 			plus.android.invoke(manager, 'turnOnPush', main);
+		}else if(platform === "harmonyos"){
+			uni.showToast({
+				title: "当前平台暂不支持此推送设置",
+				icon: "none"
+			});
 		}
 	}catch(e){
 		console.error('exception in turnOnPush@dc-push!!');
@@ -56,12 +65,18 @@ function turnOnPush(){
  */
 function trunOffPush(){
 	try{
-		if('iOS' == plus.os.name){
+		const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
+		if(platform === "ios"){
 			// 这里不做任何操作（不引导用户关闭应用的推送能力），应该通知业务服务器不向此用户下发推送消息
-		}else{
+		}else if(platform === "android"){
 			var main = plus.android.runtimeMainActivity();
 			var manager = plus.android.invoke('com.igexin.sdk.PushManager', 'getInstance');
 			plus.android.invoke(manager, 'turnOffPush', main);
+		}else if(platform === "harmonyos"){
+			uni.showToast({
+				title: "当前平台暂不支持此推送设置",
+				icon: "none"
+			});
 		}
 	}catch(e){
 		console.error('exception in trunOffPush@dc-push!!');
@@ -89,13 +104,18 @@ function settingInIos(){
  */
 function settingInAndroid(){
 	const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
-	if (platform === "android" || platform === "harmonyos") {
+	if (platform === "android") {
 		var main = plus.android.runtimeMainActivity();
-		var Intent = plus.android.importClass('android.content.Intent');  
-		var Settings = plus.android.importClass('android.provider.Settings');  
+		var Intent = plus.android.importClass('android.content.Intent');
+		var Settings = plus.android.importClass('android.provider.Settings');
 		var intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
 		// 安卓跳转设置页面详细查看(https://ask.dcloud.net.cn/question/14732)
 		main.startActivity(intent);
+	} else if (platform === "harmonyos") {
+		uni.showToast({
+			title: "请在系统设置中开启通知权限",
+			icon: "none"
+		});
 	}
 }
 /**

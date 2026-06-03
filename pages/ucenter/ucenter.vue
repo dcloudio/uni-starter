@@ -3,11 +3,11 @@
 		<uni-sign-in ref="signIn"></uni-sign-in>
 		<view class="userInfo" @click.capture="toUserInfo">
 			<cloud-image width="150rpx" height="150rpx" border-radius="50%" v-if="hasLogin&&userInfo.avatar_file&&userInfo.avatar_file.url" :src="userInfo.avatar_file.url"></cloud-image>
-			
+
 			<view v-else class="defaultAvatarUrl">
 				<uni-icons color="#ffffff" size="50" type="person-filled" />
 			</view>
-			
+
 			<view class="logo-title">
 				<text class="uer-name" v-if="hasLogin">{{userInfo.nickname||userInfo.username||userInfo.mobile|| $t('mine.unset')}}</text>
 				<text class="uer-name" v-else>{{$t('mine.notLogged')}}</text>
@@ -231,13 +231,19 @@
 						console.log('plus.runtime.openURL err:' + JSON.stringify(err));
 					});
 				}
-				if (platform === "android" || platform === "harmonyos") {
+				if (platform === "android") {
 					var Uri = plus.android.importClass("android.net.Uri");
 					var uri = Uri.parse("market://details?id=" + this.appConfig.marketId.android);
 					var Intent = plus.android.importClass('android.content.Intent');
 					var intent = new Intent(Intent.ACTION_VIEW, uri);
 					var main = plus.android.runtimeMainActivity();
 					main.startActivity(intent);
+				}
+				if (platform === "harmonyos") {
+					uni.showToast({
+						title: "当前平台暂不支持跳转应用市场",
+						icon: "none"
+					});
 				}
 				// #endif
 			},
@@ -361,7 +367,7 @@
 		background-color: #f8f8f8;
 	}
 	/* #endif*/
-	
+
 	.center {
 		flex: 1;
 		flex-direction: column;

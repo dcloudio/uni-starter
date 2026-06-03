@@ -18,7 +18,7 @@
 			<uni-load-more class="uni-load-more" :status="state.loading?'loading':(state.hasMore?'hasMore':'noMore')"></uni-load-more>
 			<!-- #endif -->
 		</template>
-		
+
 	</view>
 </template>
 
@@ -102,12 +102,17 @@
 					plus.ios.deleteObject(setting2);
 					plus.ios.deleteObject(NSURL2);
 					plus.ios.deleteObject(application2);
-				} else if (platform === "android" || platform === "harmonyos") {
+				} else if (platform === "android") {
 					var Intent = plus.android.importClass("android.content.Intent");
 					var Settings = plus.android.importClass("android.provider.Settings");
 					var mainActivity = plus.android.runtimeMainActivity();
 					var intent = new Intent(Settings.ACTION_SETTINGS);
 					mainActivity.startActivity(intent);
+				} else if (platform === "harmonyos") {
+					uni.showToast({
+						title: "请在系统设置中检查网络配置",
+						icon: "none"
+					});
 				}
 			}
 		}

@@ -4,7 +4,12 @@ export default function(){
 		fail(e) { // 失败回调拦截 更多拦截器用法 [详情](https://uniapp.dcloud.io/api/interceptor?id=addinterceptor)
 			console.log(e);
 			const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
-			if ((platform === "android" || platform === "harmonyos") && e.errMsg == 'chooseImage:fail No Permission') {
+			if (platform === "harmonyos" && e.errMsg == 'chooseImage:fail No Permission') {
+				uni.showToast({
+					title: e.code === 11 ? "请在系统设置中开启相机权限" : "请在系统设置中开启相册权限",
+					icon: "none"
+				});
+			} else if (platform === "android" && e.errMsg == 'chooseImage:fail No Permission') {
 				if (e.code === 11) {
 					uni.showModal({
 						title: "无法访问摄像头",
@@ -44,7 +49,7 @@ export default function(){
 			}
 		}
 	})
-	
+
 	//跳转到**应用**的权限页面 参考来源：https://ext.dcloud.net.cn/plugin?id=594
 	function gotoAppPermissionSetting() {
 		const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
@@ -57,7 +62,7 @@ export default function(){
 			plus.ios.deleteObject(setting2);
 			plus.ios.deleteObject(NSURL2);
 			plus.ios.deleteObject(application2);
-		} else if (platform === "android" || platform === "harmonyos") {
+		} else if (platform === "android") {
 			var Intent = plus.android.importClass("android.content.Intent");
 			var Settings = plus.android.importClass("android.provider.Settings");
 			var Uri = plus.android.importClass("android.net.Uri");
@@ -67,6 +72,11 @@ export default function(){
 			var uri = Uri.fromParts("package", mainActivity.getPackageName(), null);
 			intent.setData(uri);
 			mainActivity.startActivity(intent);
+		} else if (platform === "harmonyos") {
+			uni.showToast({
+				title: "请在系统设置中开启应用权限",
+				icon: "none"
+			});
 		}
 	}
 }
