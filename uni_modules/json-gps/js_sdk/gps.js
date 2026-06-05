@@ -29,11 +29,11 @@ class Gps {
 					});
 					console.error(JSON.stringify(err))
 					callback(false)
-					
+
 					// #ifdef APP-PLUS
 					await this.checkGpsIsOpen()
 					// #endif
-					
+
 					// #ifdef MP-WEIXIN
 					if (err.errMsg == 'getLocation:fail auth deny') {
 						uni.showModal({
@@ -66,20 +66,28 @@ class Gps {
 	// #ifdef APP-PLUS
 	async checkGpsIsOpen() {
 		this.lock = true //加锁防止重复的请求
+		const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
+		if (platform === "harmonyos") {
+			this.lock = false
+			uni.showToast({
+				title: '请在系统设置中开启定位权限',
+				icon: 'none'
+			});
+			return false
+		}
 		// console.log('检查定位设置开启问题', permision.checkSystemEnableLocation());
 		if (!permision.checkSystemEnableLocation()) {
 			plus.nativeUI.confirm("手机定位权限没有开启，是否去开启？", (e) => {
 				this.lock = false
 				if (e.index == 0) {
-					const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
 					if (platform === "ios") {
 						plus.runtime.openURL("app-settings://");
-					} else if (platform === "android" || platform === "harmonyos") {
+					} else if (platform === "android") {
 						var main = plus.android.runtimeMainActivity(); //获取activity
 						var Intent = plus.android.importClass('android.content.Intent');
 						var Settings = plus.android.importClass('android.provider.Settings');
 						var intent = new Intent(Settings
-						.ACTION_LOCATION_SOURCE_SETTINGS); //可设置表中所有Action字段  
+						.ACTION_LOCATION_SOURCE_SETTINGS); //可设置表中所有Action字段
 						main.startActivity(intent);
 					}
 				} else {
@@ -87,7 +95,7 @@ class Gps {
 						title: '设备无定位权限',
 						icon: 'none'
 					});
-					callback(false)
+					return false
 				}
 			}, {
 				"buttons": ["去设置", "不开启"],
@@ -101,8 +109,16 @@ class Gps {
 			plus.nativeUI.confirm("应用定位权限没有开启，是否去开启？", (e) => {
 				this.lock = false
 				if (e.index == 0) {
-					permision.gotoAppPermissionSetting()
-					callback(false)
+					const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
+					if (platform === "harmonyos") {
+						uni.showToast({
+							title: '请在系统设置中开启应用定位权限',
+							icon: 'none'
+						});
+					} else {
+						permision.gotoAppPermissionSetting()
+					}
+					return false
 				} else {
 					uni.showToast({
 						title: '应用无定位权限',
@@ -123,7 +139,10 @@ class Gps {
 		if (platform === "ios" && !permision.judgeIosPermission("location")) {
 			return false
 		}
-		if ((platform === "android" || platform === "harmonyos") && await permision.requestAndroidPermission(
+		if (platform === "harmonyos") {
+			return false
+		}
+		if (platform === "android" && await permision.requestAndroidPermission(
 				"android.permission.ACCESS_FINE_LOCATION") != 1) {
 			return false
 		}
