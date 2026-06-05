@@ -7,6 +7,10 @@ var isIos
 isIos = (plus.os.name == "iOS")
 // #endif
 
+function getPlatform() {
+	return uni.getSystemInfoSync().platform.toLocaleLowerCase()
+}
+
 // 判断推送权限是否开启
 function judgeIosPermissionPush() {
 	var result = false;
@@ -158,6 +162,17 @@ function judgeIosPermissionMemo() {
 // Android权限查询
 function requestAndroidPermission(permissionID) {
 	return new Promise((resolve, reject) => {
+		const platform = getPlatform()
+		if (platform !== "android") {
+			if (platform === "harmonyos") {
+				uni.showToast({
+					title: "请在系统设置中开启应用权限",
+					icon: "none"
+				});
+			}
+			resolve(0)
+			return
+		}
 		plus.android.requestPermissions(
 			[permissionID], // 理论上支持多个权限同时查询，但实际上本函数封装只处理了一个权限的情况。有需要的可自行扩展封装
 			function(resultObj) {
@@ -218,18 +233,19 @@ function judgeIosPermission(permissionID) {
 
 // 跳转到**应用**的权限页面
 function gotoAppPermissionSetting() {
-	if (isIos) {
+	const platform = getPlatform()
+	if (platform === "ios") {
 		var UIApplication = plus.ios.import("UIApplication");
 		var application2 = UIApplication.sharedApplication();
 		var NSURL2 = plus.ios.import("NSURL");
-		// var setting2 = NSURL2.URLWithString("prefs:root=LOCATION_SERVICES");		
+		// var setting2 = NSURL2.URLWithString("prefs:root=LOCATION_SERVICES");
 		var setting2 = NSURL2.URLWithString("app-settings:");
 		application2.openURL(setting2);
 
 		plus.ios.deleteObject(setting2);
 		plus.ios.deleteObject(NSURL2);
 		plus.ios.deleteObject(application2);
-	} else {
+	} else if (platform === "android") {
 		// console.log(plus.device.vendor);
 		var Intent = plus.android.importClass("android.content.Intent");
 		var Settings = plus.android.importClass("android.provider.Settings");
@@ -240,20 +256,26 @@ function gotoAppPermissionSetting() {
 		var uri = Uri.fromParts("package", mainActivity.getPackageName(), null);
 		intent.setData(uri);
 		mainActivity.startActivity(intent);
+	} else if (platform === "harmonyos") {
+		uni.showToast({
+			title: "请在系统设置中开启应用权限",
+			icon: "none"
+		});
 	}
 }
 
 // 检查系统的设备服务是否开启
 // var checkSystemEnableLocation = async function () {
 function checkSystemEnableLocation() {
-	if (isIos) {
+	const platform = getPlatform()
+	if (platform === "ios") {
 		var result = false;
 		var cllocationManger = plus.ios.import("CLLocationManager");
 		var result = cllocationManger.locationServicesEnabled();
 		// console.log("系统定位开启:" + result);
 		plus.ios.deleteObject(cllocationManger);
 		return result;
-	} else {
+	} else if (platform === "android") {
 		var context = plus.android.importClass("android.content.Context");
 		var locationManager = plus.android.importClass("android.location.LocationManager");
 		var main = plus.android.runtimeMainActivity();
@@ -261,7 +283,10 @@ function checkSystemEnableLocation() {
 		var result = mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER);
 		console.log("系统定位开启:" + result);
 		return result
+	} else if (platform === "harmonyos") {
+		return false
 	}
+	return true
 }
 
 export default {

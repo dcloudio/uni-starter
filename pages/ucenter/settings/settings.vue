@@ -10,7 +10,9 @@
 			<!-- #ifdef APP-PLUS -->
 			<!-- 检查push过程未结束不显示，push设置项 -->
 			<uni-list-item :title="$t('settings.clearTmp')" @click="clearTmp" link></uni-list-item>
+			<!-- #ifndef APP-HARMONY -->
 			<uni-list-item v-show="pushIsOn != 'wait'" :title="$t('settings.pushServer')" @click.native="pushIsOn?pushServer.off():pushServer.on()"  showSwitch :switchChecked="pushIsOn"></uni-list-item>
+			<!-- #endif -->
 			<!-- #endif -->
 			<uni-list-item v-if="supportMode.includes('fingerPrint')" :title="$t('settings.fingerPrint')" @click.native="startSoterAuthentication('fingerPrint')" link></uni-list-item>
 			<uni-list-item v-if="supportMode.includes('facial')" :title="$t('settings.facial')" @click="startSoterAuthentication('facial')" link></uni-list-item>
@@ -71,9 +73,11 @@
 		onShow() {
 			// 检查手机端获取推送是否开启
 			//#ifdef APP-PLUS
+			// #ifndef APP-HARMONY
 			setTimeout(()=>{
 				this.pushIsOn = pushServer.isOn();
 			},300)
+			// #endif
 			//#endif
 		},
 		methods: {
