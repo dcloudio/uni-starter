@@ -241,12 +241,6 @@
 					var main = plus.android.runtimeMainActivity();
 					main.startActivity(intent);
 				}
-				if (platform === "harmonyos") {
-					uni.showToast({
-						title: "当前平台暂不支持跳转应用市场",
-						icon: "none"
-					});
-				}
 				// #endif
 			},
 			/**
