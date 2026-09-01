@@ -3,18 +3,18 @@
     "version": "0.7.0",
     "description": "uni-captcha",
     "main": "index.js",
-    "homepage": "https:\/\/ext.dcloud.net.cn\/plugin?id=4048",
+    "homepage": "https://ext.dcloud.net.cn/plugin?id=4048",
     "repository": {
         "type": "git",
-        "url": "git+https:\/\/gitee.com\/dcloud\/uni-captcha"
+        "url": "git+https://gitee.com/dcloud/uni-captcha"
     },
     "author": "DCloud",
     "license": "Apache-2.0",
     "dependencies": {
-        "uni-config-center": "file:..\/..\/..\/..\/..\/uni-config-center\/uniCloud\/cloudfunctions\/common\/uni-config-center"
+        "uni-config-center": "file:../../../../../uni-config-center/uniCloud/cloudfunctions/common/uni-config-center"
     },
     "origin-plugin-dev-name": "uni-captcha",
     "origin-plugin-version": "0.7.5",
-    "plugin-dev-name": "uni-captcha",
-    "plugin-version": "0.8.2"
+    "plugin-dev-name": "uni-starter",
+    "plugin-version": "2.2.16"
 }
