@@ -2,14 +2,14 @@
 	<view class="center">
 		<uni-sign-in ref="signIn"></uni-sign-in>
 		<view class="userInfo" @click.capture="toUserInfo">
-			<cloud-image width="150rpx" height="150rpx" v-if="hasLogin&&userInfo.avatar_file&&userInfo.avatar_file.url" :src="userInfo.avatar_file.url"></cloud-image>
-			
+			<cloud-image width="150rpx" height="150rpx" border-radius="50%" v-if="hasLogin&&userInfo.avatar_file&&userInfo.avatar_file.url" :src="userInfo.avatar_file.url"></cloud-image>
+
 			<view v-else class="defaultAvatarUrl">
 				<uni-icons color="#ffffff" size="50" type="person-filled" />
 			</view>
-			
+
 			<view class="logo-title">
-				<text class="uer-name" v-if="hasLogin">{{userInfo.nickname||userInfo.username||userInfo.mobile}}</text>
+				<text class="uer-name" v-if="hasLogin">{{userInfo.nickname||userInfo.username||userInfo.mobile|| $t('mine.unset')}}</text>
 				<text class="uer-name" v-else>{{$t('mine.notLogged')}}</text>
 			</view>
 		</view>
@@ -109,11 +109,13 @@
 							"icon": "paperplane"
 						}
 						// #ifdef APP
+						// #ifndef APP-HARMONY
 						, {
 							"title": this.$t('mine.invite'),
 							"event": 'share',
 							"icon": "redo"
 						}
+						// #endif
 						// #endif
 					],
 					[{
@@ -174,10 +176,6 @@
 			}
 		},
 		methods: {
-      // 自动化测试专用
-      hasLoginTest(){
-        return store.hasLogin
-      },
 			toSettings() {
 				uni.navigateTo({
 					url: "/pages/ucenter/settings/settings"
@@ -226,7 +224,8 @@
 			 */
 			gotoMarket() {
 				// #ifdef APP-PLUS
-				if (uni.getSystemInfoSync().platform == "ios") {
+				const platform = uni.getSystemInfoSync().platform.toLocaleLowerCase();
+				if (platform === "ios") {
 					// 这里填写appstore应用id
 					let appstoreid = this.appConfig.marketId.ios; // 'id1417078253';
 					console.log({appstoreid});
@@ -234,7 +233,7 @@
 						console.log('plus.runtime.openURL err:' + JSON.stringify(err));
 					});
 				}
-				if (uni.getSystemInfoSync().platform == "android") {
+				if (platform === "android") {
 					var Uri = plus.android.importClass("android.net.Uri");
 					var uri = Uri.parse("market://details?id=" + this.appConfig.marketId.android);
 					var Intent = plus.android.importClass('android.content.Intent');
@@ -242,12 +241,18 @@
 					var main = plus.android.runtimeMainActivity();
 					main.startActivity(intent);
 				}
+				if (platform === "harmonyos") {
+					uni.showToast({
+						title: "当前平台暂不支持跳转应用市场",
+						icon: "none"
+					});
+				}
 				// #endif
 			},
 			/**
 			 * 获取积分信息
 			 */
-			async getScore() {
+			getScore() {
 				if (!this.userInfo) return uni.showToast({
 					title: this.$t('mine.checkScore'),
 					icon: 'none'
@@ -255,7 +260,7 @@
 				uni.showLoading({
 					mask: true
 				})
-				return await db.collection("uni-id-scores")
+				db.collection("uni-id-scores")
 					.where('"user_id" == $env.uid')
 					.field('score,balance')
 					.orderBy("create_date", "desc")
@@ -270,12 +275,11 @@
 							title: msg,
 							icon: 'none'
 						});
-            return res.result.data[0]
-					}).finally((err)=>{
+					}).finally(()=>{
 						uni.hideLoading()
-            return err
 					})
 			},
+			// #ifdef APP
 			async share() {
 				let {result} = await db.collection('uni-id-users').where("'_id' == $cloudEnv_uid").field('my_invite_code').get()
 				let myInviteCode = result.data[0].my_invite_code
@@ -292,7 +296,6 @@
 					company,
 					slogan
 				} = this.appConfig.about
-				// #ifdef APP
 				uniShare.show({
 					content: { //公共的分享类型（type）、链接（herf）、标题（title）、summary（描述）、imageUrl（缩略图）
 						type: 0,
@@ -348,8 +351,8 @@
 				}, e => { //callback
 					console.log(e);
 				})
-				// #endif
 			}
+			// #endif
 		}
 	}
 </script>
@@ -366,7 +369,7 @@
 		background-color: #f8f8f8;
 	}
 	/* #endif*/
-	
+
 	.center {
 		flex: 1;
 		flex-direction: column;

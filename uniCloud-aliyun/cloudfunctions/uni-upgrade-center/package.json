@@ -1,7 +1,11 @@
 {
-  "name": "uni-app-manager",
-  "dependencies": {},
-  "extensions": {
-    "uni-cloud-jql": {}
-  }
+    "name": "uni-app-manager",
+    "dependencies": {},
+    "extensions": {
+        "uni-cloud-jql": {}
+    },
+    "origin-plugin-dev-name": "uni-starter",
+    "origin-plugin-version": "2.2.16",
+    "plugin-dev-name": "uni-starter",
+    "plugin-version": "2.2.16"
 }

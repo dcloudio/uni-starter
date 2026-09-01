@@ -1,10 +1,14 @@
 {
-  "name": "uni-sms-co",
-  "dependencies": {
-    "uni-config-center": "file:../../../uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center"
-  },
-  "extensions": {
-    "uni-cloud-sms": {},
-    "uni-cloud-jql": {}
-  }
+    "name": "uni-sms-co",
+    "dependencies": {
+        "uni-config-center": "file:../../../uni_modules/uni-config-center/uniCloud/cloudfunctions/common/uni-config-center"
+    },
+    "extensions": {
+        "uni-cloud-sms": {},
+        "uni-cloud-jql": {}
+    },
+    "origin-plugin-dev-name": "uni-starter",
+    "origin-plugin-version": "2.2.16",
+    "plugin-dev-name": "uni-starter",
+    "plugin-version": "2.2.16"
 }

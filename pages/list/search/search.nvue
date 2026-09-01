@@ -63,7 +63,7 @@
 		<!-- 搜索联想 -->
 		<view class="search-associative" v-if="associativeShow">
 			<uni-list>
-				<uni-list-item  v-for="(item,index) in associativeList" :key="item._id" :ellipsis="1" :title="item.title" @click="associativeClick(item)" show-extra-icon
+				<uni-list-item  v-for="(item,index) in associativeList" :key="item._id" :ellipsis="1" :title="item.name" @click="associativeClick(item)" show-extra-icon
 				 clickable :extra-icon="{size:18,color:iconColor,type:'search'}" >
 				</uni-list-item>
 			</uni-list>
