@@ -176,6 +176,10 @@
 			}
 		},
 		methods: {
+			// 自动化测试专用
+			hasLoginTest() {
+				return store.hasLogin
+			},
 			toSettings() {
 				uni.navigateTo({
 					url: "/pages/ucenter/settings/settings"

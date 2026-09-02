@@ -13,11 +13,12 @@ describe('grid', () => {
 		// 等待图片加载完成
 		await page.waitFor(5000)
 		const images = await page.$$('.banner-image')
-		// 验证banner图片数量
-		expect(images.length).toBe(2)
-		// 验证第一张图片的src
-		const src = await images[0].property('src')
-		expect(src).toBe('https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg')
+		// Banner 由云数据库配置，数量和具体资源会随运营数据变化。
+		expect(images.length).toBeGreaterThan(0)
+		for (const image of images) {
+			const src = await image.property('src')
+			expect(src).toMatch(/^(https?:|\/)/)
+		}
 	})
 
 	it('根据登录状态显示正确的宫格数量', async () => {
