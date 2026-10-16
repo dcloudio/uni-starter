@@ -19,9 +19,9 @@ module.exports = {
     "app-plus": {
         "android": {
             "id": "emulator-5554",
-            "executablePath": "D:\\HX\\内部版\\正式版\\HBuilderX.4.06.2024032504\\HBuilderX\\plugins\\launcher\\base\\android_base.apk"
+            "executablePath": "/Applications/HBuilderX-Alpha.app/Contents/HBuilderX/plugins/launcher/base/android_base.apk"
         },
-        "version": "D:\\HX\\内部版\\正式版\\HBuilderX.4.06.2024032504\\HBuilderX\\plugins\\launcher\\base\\version.txt",
+        "version": "/Applications/HBuilderX-Alpha.app/Contents/HBuilderX/plugins/launcher/base/version.txt",
         "ios": {
             "id": "",
             "executablePath": ""

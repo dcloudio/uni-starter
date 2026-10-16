@@ -63,7 +63,9 @@ const {
   resetPwdByEmail,
   closeAccount,
   getAccountInfo,
-  getRealNameInfo
+  getRealNameInfo,
+  getTempFileURL,
+  getUploadFileOptions
 } = require('./module/account/index')
 const {
   createCaptcha,
@@ -700,6 +702,22 @@ module.exports = {
    * @returns
    */
   getRealNameInfo,
+  /**
+   * 获取 uni-id 范围内文件的临时访问链接
+   * 内置存储 (cloud://) 由前端 uniCloud.getTempFileURL 直接换链；扩展存储 URI 必须经此接口
+   * @param {Object} params
+   * @param {String} params.fileID 文件 fileID
+   * @returns
+   */
+  getTempFileURL,
+  /**
+   * 获取 uni-id 范围内文件的上传参数
+   * 前端按返回的 mode 分流到内置存储或扩展存储
+   * @param {Object} params
+   * @param {String} params.cloudPath 云端文件路径，必须以 user/ 开头且包含调用用户的 uid
+   * @returns
+   */
+  getUploadFileOptions,
   bindHuawei,
   unbindHuawei,
   bindMobileByHuawei

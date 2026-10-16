@@ -15,6 +15,6 @@
     },
     "origin-plugin-dev-name": "uni-captcha",
     "origin-plugin-version": "0.7.5",
-    "plugin-dev-name": "uni-starter",
-    "plugin-version": "2.2.16"
+    "plugin-dev-name": "uni-captcha",
+    "plugin-version": "0.8.3"
 }
