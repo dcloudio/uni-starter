@@ -35,6 +35,8 @@ function validPwd(password) {
 		if (!new RegExp(passwordRules[passwordStrength]).test(password)) {
 			return ERROR.passwordStrengthError[passwordStrength]
 		}
+	} else if (password.length < 6) {
+		return '密码长度不能小于6位'
 	}
 	return true
 }

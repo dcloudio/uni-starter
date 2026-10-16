@@ -1,6 +1,6 @@
 <template>
 	<view @click="onClick" :style="{width,height}" style="justify-content: center;">
-		<image v-if="cSrc" :style="{width,height,borderRadius}" :src="cSrc" :mode="mode"></image>
+		<image v-if="cSrc" :style="{width,height}" :src="cSrc" :mode="mode"></image>
 	</view>
 </template>
 
@@ -12,7 +12,6 @@
 	* @property {String} src	资源完了链接或uniCloud云存储资源的fileid
 	* @property {String} width	图片的宽，默认为：100rpx
 	* @property {String} height	图片的高，默认为：100rpx
-	* @property {String} borderRadius	图片的圆角，默认为：0rpx
 	* @event {Function} click 点击 cloud-image 触发事件
 	*/
 	export default {
@@ -41,12 +40,6 @@
 				type:String,
 				default () {
 					return '100rpx'
-				}
-			},
-			borderRadius: {
-				type:String,
-				default () {
-					return '0rpx'
 				}
 			}
 		},

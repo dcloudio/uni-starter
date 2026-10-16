@@ -5,6 +5,7 @@ const {
   preUnifiedLogin,
   postUnifiedLogin
 } = require('../../lib/utils/unified-login')
+const uploadFile = require('../../lib/utils/upload-file')
 const {
   getHuaweiPlatform,
 } = require('../../lib/utils/huawei')
@@ -128,7 +129,7 @@ module.exports = async function (params = {}) {
 
       const {
         fileID
-      } = await uniCloud.uploadFile({
+      } = await uploadFile.call(this, {
         cloudPath,
         fileContent: getAvatarRes.data
       })

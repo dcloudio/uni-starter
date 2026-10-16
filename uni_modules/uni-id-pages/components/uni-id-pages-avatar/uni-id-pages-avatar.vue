@@ -1,6 +1,6 @@
 <template>
 	<button open-type="chooseAvatar" @chooseavatar="bindchooseavatar" @click="uploadAvatarImg" class="box" :class="{'showBorder':border}"  :style="{width,height,lineHeight:height}">
-		<cloud-image v-if="avatar_file" :src="avatar_file.url" :width="width" :height="height"></cloud-image>
+		<cloud-image v-if="avatar_file" :src="resolvedAvatarUrl" :width="width" :height="height"></cloud-image>
 		<uni-icons v-else :style="{width,height,lineHeight:height}" class="chooseAvatar" type="plusempty" size="30"
 			color="#dddddd"></uni-icons>
 	</button>
@@ -11,6 +11,7 @@
 		store,
 		mutations
 	} from '@/uni_modules/uni-id-pages/common/store.js'
+	const uniIdCo = uniCloud.importObject("uni-id-co", { customUI: true })
 	/**
 	* uni-id-pages-avatar
 	* @description 用户头像组件
@@ -20,7 +21,8 @@
 	export default {
 		data() {
 			return {
-				isPC: false
+				isPC: false,
+				resolvedAvatarUrl: ''
 			}
 		},
 		props: {
@@ -62,36 +64,103 @@
 				return store.userInfo.avatar_file
 			}
 		},
+		watch: {
+			avatar_file: {
+				immediate: true,
+				handler(val) {
+					this.resolveAvatarUrl(val && val.url)
+				}
+			}
+		},
 		methods: {
+			// 内置云存储 (cloud://) 由 cloud-image 自行通过 uniCloud.getTempFileURL 换链
+			// http(s) / 本地路径直接渲染
+			// 扩展存储 (qiniu:// 等) 必须经云端 extStorageManager.getTempFileURL，调 uni-id-co 的 getTempFileURL
+			async resolveAvatarUrl(url) {
+				if (!url) {
+					this.resolvedAvatarUrl = ''
+					return
+				}
+				if (
+					url.startsWith('cloud://') ||
+					url.startsWith('http://') ||
+					url.startsWith('https://') ||
+					url.startsWith('/') ||
+					url.startsWith('data:')
+				) {
+					this.resolvedAvatarUrl = url
+					return
+				}
+				try {
+					const res = await uniIdCo.getTempFileURL({ fileID: url })
+					if (res && res.tempFileURL) {
+						this.resolvedAvatarUrl = res.tempFileURL
+					}
+				} catch (e) {
+					console.error('uni-id-pages-avatar: getTempFileURL failed', e)
+				}
+			},
 			setAvatarFile(avatar_file) {
 				// 使用 clientDB 提交数据
 				mutations.updateUserInfo({avatar_file})
 			},
+			// 调云端拿上传参数后按 mode 分流；返回 { name: cloudPath, url: fileID }
+			async doUploadAvatar(filePath, extname) {
+				const cloudPath = this.userInfo._id + '' + Date.now() + '.' + (extname || 'jpg')
+				let options
+				try {
+					options = await uniIdCo.getUploadFileOptions({ cloudPath })
+				} catch (e) {
+					uni.showModal({
+						content: e.errMsg || '获取上传参数失败',
+						showCancel: false
+					})
+					throw e
+				}
+				if (options.mode === 'ext') {
+					await new Promise((resolve, reject) => {
+						uni.uploadFile({
+							...options.uploadFileOptions,
+							filePath,
+							success: (res) => {
+								if (res.statusCode >= 200 && res.statusCode < 300) {
+									resolve(res)
+								} else {
+									reject(new Error(`Upload failed, statusCode=${res.statusCode}, data=${res.data}`))
+								}
+							},
+							fail: reject
+						})
+					})
+					return { name: options.cloudPath, url: options.fileID }
+				}
+				const res = await uniCloud.uploadFile({
+					filePath,
+					cloudPath: options.cloudPath,
+					fileType: "image"
+				})
+				console.log('res', res, options)
+				return { name: options.cloudPath, url: res.fileID }
+			},
 			async bindchooseavatar(res){
 				let avatarUrl = res.detail.avatarUrl
+				let extname = avatarUrl.split('.')[avatarUrl.split('.').length - 1]
 				let avatar_file = {
-					extname: avatarUrl.split('.')[avatarUrl.split('.').length - 1],
+					extname,
 					name:'',
 					url:''
 				}
-				//上传到服务器
-				let cloudPath = this.userInfo._id + '' + Date.now()
-				avatar_file.name = cloudPath
 				try{
 					uni.showLoading({
 						title: "更新中",
 						mask: true
 					});
-					let {
-						fileID
-					} = await uniCloud.uploadFile({
-						filePath:avatarUrl,
-						cloudPath,
-						fileType: "image"
-					});
-					avatar_file.url = fileID
+					const uploaded = await this.doUploadAvatar(avatarUrl, extname)
+					avatar_file.name = uploaded.name
+					avatar_file.url = uploaded.url
 					uni.hideLoading()
 				}catch(e){
+					uni.hideLoading()
 					console.error(e);
 				}
 				console.log('avatar_file',avatar_file);
@@ -150,22 +219,20 @@
 						}
 						// #endif
 
-						let cloudPath = this.userInfo._id + '' + Date.now()
-						avatar_file.name = cloudPath
 						uni.showLoading({
 							title: "更新中",
 							mask: true
 						});
-						let {
-							fileID
-						} = await uniCloud.uploadFile({
-							filePath,
-							cloudPath,
-							fileType: "image"
-						});
-						avatar_file.url = fileID
-						uni.hideLoading()
-						this.setAvatarFile(avatar_file)
+						try {
+							const uploaded = await this.doUploadAvatar(filePath, avatar_file.extname)
+							avatar_file.name = uploaded.name
+							avatar_file.url = uploaded.url
+							uni.hideLoading()
+							this.setAvatarFile(avatar_file)
+						} catch (e) {
+							uni.hideLoading()
+							console.error(e)
+						}
 					}
 				})
 				// #endif

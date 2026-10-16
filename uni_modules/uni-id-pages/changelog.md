@@ -1,3 +1,8 @@
+## 1.1.29（2026-10-16）
+- 修复注册页与云对象校验规则不一致的问题，统一用户名、昵称和密码校验逻辑
+## 1.1.28（2026-04-30）
+- uni-id-co 三方登录头像、实人认证照片上传支持扩展存储（uni-cloud-ext-storage），通过 `service.storage` 配置开启，设置 `mode: "ext"` 启用扩展存储 [详情](https://doc.dcloud.net.cn/uniCloud/uni-id/summary.html#config)
+- uni-id-co 新增 `getTempFileURL` / `getUploadFileOptions` 云方法，统一处理内置存储与扩展存储的临时链接获取与上传参数派发 [详情](https://doc.dcloud.net.cn/uniCloud/uni-id/cloud-object.html#get-temp-file-url)
 ## 1.1.27（2026-01-13）
 - 支付宝登录支持证书验签方式
 ## 1.1.26（2026-01-06）
